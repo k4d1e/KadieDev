@@ -1,0 +1,95 @@
+/* ==========================================================================
+   BASE.CSS
+   Typography, colors, resets
+   ========================================================================== */
+
+/* ===== RESETS ===== */
+/* Box-sizing reset - critical for layout calculations */
+* {
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    background-color: #ffffff !important;
+    min-height: 100vh;
+}
+
+/* ===== TYPOGRAPHY ===== */
+
+.hero-heading {
+    color: #000;
+    font-size: 18px;
+}
+
+.hero-heading.large {
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: 700;
+}
+
+/* ===== COLORS ===== */
+/* Link gradient colors */
+.gradient-link {
+    background-image: linear-gradient(214deg, #ff285c, #b010fb);
+    font-size: 18px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-link.large {
+    background-image: linear-gradient(214deg, #ff285c, #b010fb);
+    font-size: 22px;
+}
+
+/* Blue-green gradient text */
+.gradient-link.blue-green {
+    background-image: linear-gradient(214deg, #2b2800, #c58001 );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-link.secondary {
+    background-image: none;
+    opacity: 0.69;
+    color: rgba(0, 0, 0, 0.7);
+    background-clip: border-box;
+    -webkit-text-fill-color: inherit;
+}
+
+.gradient-link:hover {
+    opacity: 0.7;
+}
+
+.gradient-link.secondary:hover {
+    opacity: 0.5;
+}
+
+.gradient-link:visited {
+    color: rgba(0, 0, 0, 0.74);
+}
+
+.gradient-link.secondary:visited {
+    color: rgba(0, 0, 0, 0.74);
+}
+
+/* Remove underline from anchor tags containing gradient-link spans */
+a .gradient-link,
+.home-right-column a {
+    text-decoration: none;
+}
+
+/* Text colors */
+.nav-button-year {
+    opacity: 0.69;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.last-updated {
+    opacity: 0.5;
+}
+

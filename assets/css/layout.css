@@ -1,0 +1,220 @@
+/* ==========================================================================
+   LAYOUT.CSS
+   Containers, grids, spacing
+   ========================================================================== */
+
+/* ===== GRID SYSTEM ===== */
+.grid-row:before,
+.grid-row:after {
+    content: " ";
+    display: table;
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-column-end: 2;
+    grid-row-end: 2;
+}
+
+.grid-row:after {
+    clear: both;
+}
+
+.grid-row .grid-row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.grid-col {
+    position: relative;
+    float: left;
+    width: 100%;
+    min-height: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.grid-col .grid-col {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.grid-col-5 {
+    width: 41.66666667%;
+}
+
+.grid-col-7 {
+    width: 58.33333333%;
+}
+
+/* Medium breakpoint (tablets) */
+@media screen and (max-width: 989px) {
+    .grid-col-medium-5 {
+        width: 41.66666667%;
+    }
+    
+    .grid-col-medium-7 {
+        width: 58.33333333%;
+    }
+}
+
+/* Small breakpoint (mobile) */
+@media screen and (max-width: 820px) {
+    .grid-row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    .grid-col {
+        width: 100%;
+        left: auto;
+        right: auto;
+    }
+}
+
+/* ===== HOMEPAGE LAYOUT ===== */
+
+/* Main Column Container */
+.home-main-column {
+    display: flex;
+    height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* Left Column (Navigation Menu) */
+.home-left-column {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Right Column (Content) */
+.home-right-column {
+    position: sticky;
+    left: auto;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    display: flex;
+    height: 100vh;
+    padding: 20vh 10vw 20vh 0vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Empty wrapper div inside home-right-column - ensures proper flex behavior */
+.home-right-column > div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Project List Wrapper */
+.project-list-wrapper {
+    grid-column-gap: 4px;
+    grid-row-gap: 4px;
+}
+
+/* Project List */
+.project-list {
+    display: flex;
+    flex-direction: column;
+    grid-column-gap: 8px;
+    grid-row-gap: 8px;
+}
+
+/* Project Item */
+.project-item {
+    align-items: center;
+}
+
+/* Hero Content Blocks */
+.hero-content {
+    padding-top: 15px;
+    flex-direction: column;
+    line-height: 22px;
+}
+
+.hero-links {
+    display: flex;
+    grid-column-gap: 6px;
+    grid-row-gap: 6px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.hero-links.secondary {
+    margin-top: 12px;
+    grid-column-gap: 12px;
+    grid-row-gap: 12px;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* Medium breakpoint (max-width: 989px) */
+@media screen and (max-width: 989px) {
+    .home-right-column {
+        padding-left: 5vw;
+    }
+    
+    .last-updated {
+        margin-right: 26px;
+        margin-bottom: 26px;
+    }
+}
+
+/* Small breakpoint (max-width: 820px) */
+@media screen and (max-width: 820px) {
+    .home-right-column {
+        position: static;
+        top: 0;
+        height: auto;
+        padding-top: 5vh;
+        padding-right: 24px;
+        padding-left: 24px;
+        padding-bottom: 15vh;
+        margin-bottom: 4vh;
+    }
+    
+    .home-left-column {
+        height: auto;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+    
+    .home-main-column {
+        flex-direction: column-reverse;
+    }
+    
+    .last-updated {
+        position: relative;
+        top: -24px;
+        right: auto;
+        margin-right: 0px;
+    }
+    
+    .hero-heading {
+        font-size: 16px;
+    }
+}
+
+/* Tiny breakpoint (max-width: 420px) */
+@media screen and (max-width: 420px) {
+    .home-right-column {
+        padding-top: 5vh;
+        padding-right: 24px;
+        padding-bottom: 15vh;
+        margin-bottom: 4vh;
+    }
+    
+    .home-left-column {
+        height: auto;
+    }
+    
+    .home-main-column {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}
+
