@@ -70,7 +70,7 @@
             <div role="list" class="project-list dynamic-items">
               
               <div role="listitem" class="project-item dynamic-item">
-                <div class="nav-button-block" data-video="placeholder-video.mp4">
+                <div class="nav-button-block" data-responsive-preview="true">
                   <div class="nav-button">Responsive Design</div>
                   <div class="nav-button-year">2022</div>
                 </div>
@@ -147,7 +147,59 @@
     </video>
   </div>
 
+  <!-- Responsive Design Preview Overlay (Desktop) -->
+  <div id="responsive-preview-overlay" class="responsive-preview-overlay" aria-hidden="true">
+    <div class="responsive-preview-content">
+      <div class="responsive-preview-header">
+        <h2>Responsive Layout Simulator</h2>
+        <p>Watch the layout adapt as the device morphs</p>
+      </div>
+      <div class="responsive-preview-stage">
+        <div class="responsive-device-frame">
+          <div class="responsive-notch"></div>
+          <div class="responsive-screen-content">
+            <div class="responsive-section-header">01. Navigation</div>
+            <div class="responsive-nav">
+              <div class="responsive-box responsive-c1 responsive-nav-logo">Logo</div>
+              <div class="responsive-nav-items">
+                <div class="responsive-box responsive-c3 responsive-nav-link">Home</div>
+                <div class="responsive-box responsive-c3 responsive-nav-link">About</div>
+                <div class="responsive-box responsive-c3 responsive-nav-link">Contact</div>
+              </div>
+            </div>
+
+            <div class="responsive-section-header">02. Hero Section</div>
+            <div class="responsive-hero">
+              <div class="responsive-box responsive-c4 responsive-hero-txt">
+                <h1>Headline</h1>
+              </div>
+              <div class="responsive-box responsive-c5 responsive-hero-img">Visual</div>
+            </div>
+
+            <div class="responsive-section-header">03. Feature Grid</div>
+            <div class="responsive-grid">
+              <div class="responsive-box responsive-c2 responsive-card">Feature A</div>
+              <div class="responsive-box responsive-c2 responsive-card">Feature B</div>
+              <div class="responsive-box responsive-c2 responsive-card">Feature C</div>
+              <div class="responsive-box responsive-c2 responsive-card">Feature D</div>
+              <div class="responsive-box responsive-c2 responsive-card">Feature E</div>
+              <div class="responsive-box responsive-c2 responsive-card">Feature F</div>
+            </div>
+            <div style="height: 100px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Responsive Design Mobile Preview Overlay -->
+  <div id="responsive-preview-overlay-mobile" class="responsive-preview-overlay-mobile" aria-hidden="true">
+    <button class="responsive-preview-close-mobile" aria-label="Close preview">×</button>
+    <iframe id="responsive-mobile-iframe" src="responsive-design-mobile/index.html" class="responsive-mobile-iframe"></iframe>
+  </div>
+
   <script src="assets/js/hovervideo.js" type="text/javascript"></script>
+  <script src="assets/js/responsive-preview.js" type="text/javascript"></script>
 
 </body>
 </html>
