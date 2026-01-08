@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10-Day Growth Simulation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg: #242424;
+            --text-primary: #e0e0e0;
+            --accent-orange: #f7941d;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            font-family: 'Roboto', Arial, sans-serif;
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .anim-controls {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .animate-btn {
+            background-color: var(--accent-orange);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .animate-btn:hover { opacity: 0.9; }
+        .animate-btn:disabled { background-color: #555; cursor: not-allowed; }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="anim-controls">
+        <button id="growBtn" class="animate-btn" onclick="startDrawing()">&#9658; Simulate 10-Day Growth</button>
+        <button class="animate-btn" style="background:#555;" onclick="resetGraph()">&#8634; Reset</button>
+    </div>
+
+    <div class="container">
+        <div style="position: relative;">
+            <div class="chart-container">
+                <canvas id="trafficChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('trafficChart').getContext('2d');
+        let myChart;
+        let animationInterval;
+
+        // 1. UPDATED DATA: 10 Days, 80 -> 570
+        const allLabels = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 8', 'Day 9', 'Day 10'];
+        const allDataPoints = [100, 135, 160, 190, 290, 335, 370, 480, 520, 555];
+
+        // Start with only the first data point (80)
+        let currentData = [allDataPoints[0]]; 
+
+        function getGradient(ctx, chartArea) {
+            const chartHeight = chartArea.bottom - chartArea.top;
+            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            gradient.addColorStop(0, 'rgba(247, 148, 29, 0.6)');
+            gradient.addColorStop(1, 'rgba(247, 148, 29, 0.0)');
+            return gradient;
+        }
+
+        function initChart() {
+            const config = {
+                type: 'line',
+                data: {
+                    labels: allLabels, 
+                    datasets: [{
+                        label: 'Organic traffic',
+                        data: [...currentData], 
+                        borderColor: '#f7941d',
+                        backgroundColor: 'rgba(247, 148, 29, 0.1)', 
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3, 
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 0 }, // Disable standard animation for "drawing" effect
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#a0a0a0' }
+                        },
+                        y: {
+                            position: 'right',
+                            min: 0, 
+                            max: 600, // Increased max to accommodate 570
+                            ticks: { stepSize: 100, color: '#a0a0a0' },
+                            grid: { color: '#333333', drawBorder: false }
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'customGradient',
+                    beforeDatasetsDraw: (chart) => {
+                        const { ctx, chartArea } = chart;
+                        if (!chartArea) return;
+                        const dataset = chart.data.datasets[0];
+                        dataset.backgroundColor = getGradient(ctx, chartArea);
+                    }
+                }]
+            };
+
+            myChart = new Chart(ctx, config);
+        }
+
+        function startDrawing() {
+            const btn = document.getElementById('growBtn');
+            btn.disabled = true; 
+
+            if (animationInterval) clearInterval(animationInterval);
+
+            animationInterval = setInterval(() => {
+                const nextIndex = myChart.data.datasets[0].data.length;
+                
+                if (nextIndex >= allDataPoints.length) {
+                    clearInterval(animationInterval);
+                    btn.innerHTML = "Completed";
+                    return;
+                }
+
+                const nextValue = allDataPoints[nextIndex];
+                myChart.data.datasets[0].data.push(nextValue);
+                myChart.update();
+
+            }, 150); // Speed: 300ms per day
+        }
+
+        function resetGraph() {
+            if (animationInterval) clearInterval(animationInterval);
+            myChart.data.datasets[0].data = [allDataPoints[0]];
+            myChart.update();
+            const btn = document.getElementById('growBtn');
+            btn.disabled = false;
+            btn.innerHTML = "&#9658; Simulate 10-Day Growth";
+        }
+
+        initChart();
+
+    </script>
+</body>
+</html>
