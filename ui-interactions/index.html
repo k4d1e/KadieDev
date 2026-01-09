@@ -5187,8 +5187,26 @@
     function attachControlListeners() {
       // Font selects
       document.querySelectorAll('.font-select').forEach(select => {
+        // Apply font on change (permanent)
         select.addEventListener('change', (e) => {
           applyCustomization(e.target.dataset.property, e.target.value, e.target.dataset.selector, e.target.dataset.cssProperty);
+        });
+
+        // Preview font on hover (temporary)
+        select.addEventListener('mouseenter', function() {
+          const options = this.querySelectorAll('option');
+          
+          options.forEach(option => {
+            option.addEventListener('mouseover', (e) => {
+              const fontValue = e.target.value;
+              const property = this.dataset.property;
+              
+              // Temporarily apply the hovered font to preview
+              if (property.startsWith('--')) {
+                document.documentElement.style.setProperty(property, fontValue);
+              }
+            });
+          });
         });
       });
 
