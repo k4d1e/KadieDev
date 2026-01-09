@@ -1,0 +1,142 @@
+/* ==========================================================================
+   BENTO.CSS
+   Bento Box Showcase Styles
+   ========================================================================= */
+
+/* Bento Grid Wrapper */
+.bento-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* Bento Card */
+.bento-card {
+    position: relative;
+    flex: 1 1 calc(33.333% - 24px); /* 3 per row */
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.05);
+    overflow: hidden;
+    aspect-ratio: 1 / 1; /* perfect square */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bento-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 32px rgba(0,0,0,0.08);
+}
+
+/* Responsive breakpoints for card width */
+@media (max-width: 989px) {
+    .bento-card {
+        flex: 1 1 calc(50% - 24px); /* 2 per row */
+    }
+}
+
+@media (max-width: 600px) {
+    .bento-card {
+        flex: 1 1 100%; /* 1 per row */
+    }
+}
+
+/* Inner Bento Grid */
+.bento-inner {
+    display: grid;
+    width: 100%;
+    height: 100%;
+}
+
+/* Generic cell styling */
+.bento-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-family: var(--font-body, 'Montserrat', sans-serif);
+    color: rgba(255,255,255,0.9);
+    font-size: clamp(12px, 2vw, 18px);
+    text-align: center;
+}
+
+/* Color palette (OKLCH for vibrancy) */
+.bc1 { background: oklch(70% 0.15 20); }
+.bc2 { background: oklch(70% 0.15 80); }
+.bc3 { background: oklch(70% 0.15 140); }
+.bc4 { background: oklch(70% 0.15 200); }
+.bc5 { background: oklch(70% 0.15 260); }
+.bc6 { background: oklch(70% 0.15 320); }
+.bc7 { background: oklch(85% 0.12 40); color:#000;}
+.bc8 { background: oklch(85% 0.12 100); color:#000;}
+.bc9 { background: oklch(85% 0.12 160); color:#000;}
+.bc10{ background: oklch(85% 0.12 220); color:#000;}
+
+/* ========== PATTERN DEFINITIONS ========== */
+/* Pattern 1: Simple 2x2 */
+.pattern-1 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr);} 
+.pattern-1 .bento-cell:nth-child(1) { grid-area: 1 / 1; }
+.pattern-1 .bento-cell:nth-child(2) { grid-area: 1 / 2; }
+.pattern-1 .bento-cell:nth-child(3) { grid-area: 2 / 1; }
+.pattern-1 .bento-cell:nth-child(4) { grid-area: 2 / 2; }
+
+/* Pattern 2: Hero + two stacks */
+.pattern-2 { grid-template-columns: 2fr 1fr; grid-template-rows: 2fr 1fr; }
+.pattern-2 .bento-cell:nth-child(1) { grid-area: 1 / 1 / 3 / 2; }
+.pattern-2 .bento-cell:nth-child(2) { grid-area: 1 / 2; }
+.pattern-2 .bento-cell:nth-child(3) { grid-area: 2 / 2; }
+
+/* Pattern 3: Three columns */
+.pattern-3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+.pattern-3 .bento-cell:nth-child(1) { grid-column: 1 / 4; }
+.pattern-3 .bento-cell:nth-child(2) { grid-row: 2 / 4; grid-column: 1 / 3; }
+.pattern-3 .bento-cell:nth-child(3) { grid-area: 2 / 3; }
+.pattern-3 .bento-cell:nth-child(4) { grid-area: 3 / 3; }
+
+/* Pattern 4: Diagonal split */
+.pattern-4 { grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(2,1fr); }
+.pattern-4 .bento-cell:first-child {grid-column: 1 / 3; grid-row: 1 / 2;}
+.pattern-4 .bento-cell:nth-child(2) {grid-column: 1 / 2; grid-row: 2 / 3;}
+.pattern-4 .bento-cell:nth-child(3) {grid-column: 2 / 3; grid-row: 2 / 3;}
+
+/* Pattern 5: Center focus */
+.pattern-5 { grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); }
+.pattern-5 .bento-cell:nth-child(1) {grid-area: 2 / 2;}
+.pattern-5 .bento-cell:nth-child(2) {grid-area: 1 / 2;}
+.pattern-5 .bento-cell:nth-child(3) {grid-area: 2 / 1;}
+.pattern-5 .bento-cell:nth-child(4) {grid-area: 2 / 3;}
+.pattern-5 .bento-cell:nth-child(5) {grid-area: 3 / 2;}
+
+/* Pattern 6: Big footer */
+.pattern-6 { grid-template-columns: repeat(2,1fr); grid-template-rows: 1fr 2fr; }
+.pattern-6 .bento-cell:nth-child(3) {grid-column: 1 / 3; grid-row: 2 / 3;}
+
+/* Pattern 7: Instagram-ish */
+.pattern-7 { grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(2,1fr);}
+.pattern-7 .bento-cell:nth-child(1) {grid-column: 1 / 3; grid-row: 1 / 3;}
+
+/* Pattern 8: Asymmetric columns */
+.pattern-8 { grid-template-columns: 1.5fr 1fr; grid-template-rows: repeat(3,1fr); }
+.pattern-8 .bento-cell:nth-child(4) { grid-column: 2 / 3; grid-row: 2 / 4;}
+
+/* Pattern 9: Large right */
+.pattern-9 { grid-template-columns: 1fr 2fr; grid-template-rows: repeat(2,1fr);} 
+.pattern-9 .bento-cell:nth-child(2) { grid-column: 2 / 3; grid-row: 1 / 3; }
+
+/* Pattern 10: Four rows banner */
+.pattern-10 { grid-template-columns: repeat(2,1fr); grid-template-rows: 1fr repeat(2,1fr) 0.5fr;}
+.pattern-10 .bento-cell:first-child { grid-column: 1 / 3; grid-row: 1 / 2; }
+.pattern-10 .bento-cell:last-child { grid-column: 1 / 3; grid-row: 4 / 5; }
+
+/* Pattern 11: Checkerboard */
+.pattern-11 { grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(4,1fr); }
+.pattern-11 .bento-cell:nth-child(odd) { background: oklch(92% 0 0 / 0.1); color:#000; }
+
+/* Pattern 12: Spiral */
+.pattern-12 { grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr);} 
+.pattern-12 .bento-cell:nth-child(1) { grid-area: 1 / 1 / 1 / 4; }
+.pattern-12 .bento-cell:nth-child(2) { grid-area: 2 / 3 / 4 / 4; }
+.pattern-12 .bento-cell:nth-child(3) { grid-area: 3 / 1 / 4 / 3; }
+.pattern-12 .bento-cell:nth-child(4) { grid-area: 2 / 1 / 3 / 2; }
+
