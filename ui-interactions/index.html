@@ -1109,13 +1109,76 @@
       background: white;
       border: 2px dashed #ccc;
       border-radius: 10px;
-      padding: 30px;
-      min-height: 150px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 20px;
+      min-height: 200px;
       position: relative;
       overflow: hidden;
+    }
+
+    .preview-slider-container {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      cursor: grab;
+      user-select: none;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .preview-slider-container:active {
+      cursor: grabbing;
+    }
+
+    .preview-slider-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .preview-slider-container::-webkit-scrollbar-track {
+      background: #f0f0f0;
+      border-radius: 10px;
+    }
+
+    .preview-slider-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      border-radius: 10px;
+    }
+
+    .preview-cards-wrapper {
+      display: flex;
+      gap: 15px;
+      padding: 10px 0;
+      min-width: max-content;
+    }
+
+    .preview-mini-card {
+      min-width: 280px;
+      max-width: 280px;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .preview-mini-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      border-color: var(--accent-color);
+    }
+
+    .preview-mini-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .preview-mini-card p {
+      margin: 0 0 15px 0;
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.4;
     }
 
     .preview-placeholder {
@@ -4922,75 +4985,137 @@
       attachControlListeners();
     }
 
-    // Update preview section based on active tab
+    // Update preview section with draggable slider showing 6 cards
     function updatePreview(tabName) {
       const previewContainer = document.getElementById('customizerPreview');
-      let previewHTML = '';
       
-      switch(tabName) {
-        case 'typography':
-          previewHTML = `
-            <div class="preview-element" id="previewElement" style="padding: 15px; max-width: 100%;">
-              <div style="text-align: center; margin-bottom: 15px;">
-                <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin: 0 0 8px 0;">8-Category Font System</h3>
-                <p style="font-family: var(--font-body); margin: 0; color: #666;">Live preview of all font categories</p>
+      // Create draggable slider with 6 mini interaction cards
+      const previewHTML = `
+        <div class="preview-slider-container" id="previewSlider">
+          <div class="preview-cards-wrapper">
+            
+            <!-- Card 1: Pagination (Heading, Body, Action, Menu, Status) -->
+            <div class="preview-mini-card">
+              <h3 class="interaction-title">Pagination</h3>
+              <p class="interaction-description">Navigate through pages</p>
+              <div style="display: flex; gap: 8px; align-items: center; justify-content: center; margin: 10px 0;">
+                <button class="pagination-btn" style="padding: 8px 12px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer;">‹</button>
+                <span class="pagination-number" style="padding: 6px 12px; border: 2px solid var(--accent-color); border-radius: 6px; font-weight: 600;">1</span>
+                <span class="pagination-number" style="padding: 6px 12px; border: 2px solid #e0e0e0; border-radius: 6px;">2</span>
+                <span class="pagination-number" style="padding: 6px 12px; border: 2px solid #e0e0e0; border-radius: 6px;">3</span>
+                <button class="pagination-btn" style="padding: 8px 12px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer;">›</button>
               </div>
-              <div style="display: grid; gap: 10px; font-size: 0.85rem;">
-                <div style="font-family: var(--font-heading); font-weight: 600; font-size: 1.1rem;">1. Heading Font</div>
-                <div style="font-family: var(--font-body);">2. Body Font - Description text</div>
-                <button style="font-family: var(--font-action); padding: 8px 16px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; background: white;">3. Action Font</button>
-                <div style="font-family: var(--font-display); font-weight: 700; font-size: 1.8rem;">1234</div>
-                <div style="font-family: var(--font-menu);">5. Menu Font • Navigation</div>
-                <input type="text" placeholder="6. Input Font" style="font-family: var(--font-input); padding: 8px; border: 2px solid #e0e0e0; border-radius: 6px;">
-                <div style="font-family: var(--font-status); font-size: 0.8rem; color: #666;">7. Status Font - Info text</div>
-                <div style="font-family: var(--font-supporting); font-size: 0.85rem; line-height: 1.6;">8. Supporting Font - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+              <div class="pagination-info" style="text-align: center; font-size: 0.75rem; color: #999; margin-top: 8px;">Page 1 of 5</div>
+            </div>
+
+            <!-- Card 2: Password Strength (Heading, Body, Input, Status) -->
+            <div class="preview-mini-card">
+              <h3 class="interaction-title">Password</h3>
+              <p class="interaction-description">Real-time validation</p>
+              <input type="password" class="password-input" placeholder="Enter password..." style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 6px; margin: 10px 0; font-size: 0.9rem;">
+              <div style="height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; margin: 8px 0;">
+                <div style="width: 60%; height: 100%; background: linear-gradient(90deg, #ffd700, #ffa500);"></div>
               </div>
+              <div class="strength-text" style="text-align: center; font-size: 0.75rem; color: #ffa500; font-weight: 600;">Medium Strength</div>
             </div>
-          `;
-          break;
-        
-        case 'colors':
-          previewHTML = `
-            <div class="preview-element" id="previewElement" style="padding: 20px; text-align: center;">
-              <h3 style="background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); background-clip: text; -webkit-background-clip: text; color: transparent; -webkit-text-fill-color: transparent; font-size: 1.5rem; margin: 0 0 15px 0;">Color Preview</h3>
-              <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;">
-                <div style="width: 50px; height: 50px; border-radius: 10px; background: var(--primary-start); box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
-                <div style="width: 50px; height: 50px; border-radius: 10px; background: var(--primary-end); box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
-                <div style="width: 50px; height: 50px; border-radius: 10px; background: var(--accent-color); box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+
+            <!-- Card 3: Counter (Heading, Body, Display, Action) -->
+            <div class="preview-mini-card">
+              <h3 class="interaction-title">Counter</h3>
+              <p class="interaction-description">Animated numbers</p>
+              <div class="counter-display" style="text-align: center; font-size: 2.5rem; font-weight: 700; color: var(--accent-color); margin: 15px 0;">1000</div>
+              <button class="counter-button" style="width: 100%; padding: 10px; background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Count Up</button>
+            </div>
+
+            <!-- Card 4: Tabs (Heading, Body, Menu, Supporting) -->
+            <div class="preview-mini-card">
+              <h3 class="interaction-title">Tabs</h3>
+              <p class="interaction-description">Switch content panels</p>
+              <div style="display: flex; gap: 4px; margin: 10px 0; border-bottom: 2px solid #e0e0e0; padding-bottom: 2px;">
+                <button class="tab-button" style="padding: 6px 12px; border: none; background: rgba(0,0,0,0.05); border-bottom: 2px solid var(--accent-color); cursor: pointer; font-size: 0.8rem;">Home</button>
+                <button class="tab-button" style="padding: 6px 12px; border: none; background: transparent; cursor: pointer; font-size: 0.8rem;">About</button>
+                <button class="tab-button" style="padding: 6px 12px; border: none; background: transparent; cursor: pointer; font-size: 0.8rem;">Contact</button>
               </div>
-              <div style="height: 60px; border-radius: 10px; background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%); box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+              <div class="tab-panel" style="padding: 12px; background: #f9f9f9; border-radius: 6px; font-size: 0.8rem; line-height: 1.4;">This is tab content with supporting text.</div>
             </div>
-          `;
-          break;
-        
-        case 'buttons':
-          previewHTML = `
-            <div class="preview-element" id="previewElement" style="padding: 20px; text-align: center;">
-              <h3 style="margin: 0 0 20px 0; font-size: 1.3rem;">Button Preview</h3>
-              <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
-                <button style="padding: 12px 24px; background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">Primary Button</button>
-                <button style="padding: 12px 24px; background: white; color: var(--accent-color); border: 2px solid var(--accent-color); border-radius: 10px; cursor: pointer; font-weight: 600;">Secondary Button</button>
-                <button style="padding: 12px 24px; background: #4caf50; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">Success Button</button>
-              </div>
+
+            <!-- Card 5: Like Button (Heading, Body, Action, Display) -->
+            <div class="preview-mini-card">
+              <h3 class="interaction-title">Like Button</h3>
+              <p class="interaction-description">Heart icon feedback</p>
+              <button class="like-button" style="display: flex; align-items: center; gap: 8px; margin: 15px auto; padding: 12px 24px; border: 2px solid #ff285c; background: white; border-radius: 50px; cursor: pointer; color: #ff285c; font-weight: 600;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#ff285c">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span class="counter-display" style="font-size: 1.1rem; font-weight: 700;">42</span>
+                Likes
+              </button>
             </div>
-          `;
-          break;
-        
-        case 'cards':
-          previewHTML = `
-            <div class="preview-element interaction-card" id="previewElement" style="max-width: 400px; margin: 0 auto;">
-              <h2 class="interaction-title">Sample Card Title</h2>
-              <p class="interaction-description">This is a preview of the card styling. Adjust the settings to see changes in real-time.</p>
-              <button style="padding: 10px 20px; background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">Card Button</button>
+
+            <!-- Card 6: Color Picker (Heading, Body, Input, Display) -->
+            <div class="preview-mini-card">
+              <h3 class="interaction-title">Color Picker</h3>
+              <p class="interaction-description">Select and preview colors</p>
+              <div style="width: 100%; height: 80px; border-radius: 8px; background: #ff285c; margin: 10px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+              <input type="color" class="color-input" value="#ff285c" style="width: 100%; height: 40px; border: 2px solid #e0e0e0; border-radius: 6px; cursor: pointer; margin: 8px 0;">
+              <div class="color-value" style="text-align: center; font-family: monospace; font-weight: 700; font-size: 1rem; color: #666;">#ff285c</div>
             </div>
-          `;
-          break;
-        
-        default:
-          previewHTML = '<div class="preview-placeholder">Select a tab to see preview</div>';
-      }
+
+          </div>
+        </div>
+      `;
       
       previewContainer.innerHTML = previewHTML;
+      
+      // Initialize drag scrolling
+      initializeDragScroll();
+    }
+
+    // Initialize drag scrolling functionality
+    function initializeDragScroll() {
+      const slider = document.getElementById('previewSlider');
+      if (!slider) return;
+
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.style.cursor = 'grabbing';
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+      });
+
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+      });
+
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2; // Scroll speed multiplier
+        slider.scrollLeft = scrollLeft - walk;
+      });
+
+      // Touch support for mobile
+      slider.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+
+      slider.addEventListener('touchmove', (e) => {
+        const x = e.touches[0].pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+      });
     }
 
     // Generate control HTML based on type
