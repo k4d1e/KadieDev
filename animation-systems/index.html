@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Animation Systems – Kadie Dev</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/layout.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <style>
+    /* Page-specific styles */
+    body {
+      padding: 40px 20px;
+      background: var(--bg-start);
+      font-family: var(--font-body);
+    }
+
+    .page-title {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      text-align: center;
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .animation-card {
+      flex: 0 1 260px;
+      max-width: 300px;
+      background: #fff;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform .3s ease;
+    }
+    .animation-card:hover { transform: translateY(-6px); }
+
+    .anim-demo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 15px;
+    }
+
+    /* Animations */
+    @keyframes rotate360 { to { transform: rotate(360deg); } }
+    .demo-rotate { animation: rotate360 3s linear infinite; width: 80px; height: 80px; border-radius: 50%; border: 6px solid var(--accent-color); border-top-color: transparent; background: transparent; }
+
+    @keyframes pulse {
+      0%,100%{transform:scale(1)}50%{transform:scale(1.2)}
+    }
+    .demo-pulse{animation:pulse 2s ease-in-out infinite;border-radius:50%;background:var(--primary-start);}
+
+    @keyframes slide {
+      0%{transform:translateX(-40px);opacity:0}100%{transform:translateX(40px);opacity:1}
+    }
+    .demo-slide{animation:slide 1.2s ease-in-out infinite alternate;background:var(--accent-color);}
+
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
+    .demo-bounce{animation:bounce 1.8s cubic-bezier(.5,.05,1,.5) infinite;background:var(--accent-color);border-radius:10px;}
+
+    @keyframes shake {10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
+    .demo-shake{animation:shake .8s cubic-bezier(.36,.07,.19,.97) infinite;background:var(--primary-start);}
+
+    @keyframes grow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+    .demo-grow{animation:grow 2.5s ease-out infinite alternate;background:var(--accent-color); transform-origin:left center;}
+
+    @keyframes colorShift{0%{background:#ff285c}25%{background:#b010fb}50%{background:#00c853}75%{background:#ff9800}100%{background:#ff285c}}
+    .demo-color{animation:colorShift 5s linear infinite; border-radius:50%;}
+
+    @keyframes flip{0%{transform:perspective(400px) rotateY(0deg)}100%{transform:perspective(400px) rotateY(360deg)}}
+    .demo-flip{animation:flip 3s linear infinite;background:var(--accent-color);}
+
+    @keyframes ripple{0%{box-shadow:0 0 0 0 rgba(0,0,0,.15)}70%{box-shadow:0 0 0 15px rgba(0,0,0,0)}100%{box-shadow:0 0 0 0 rgba(0,0,0,0)}}
+    .demo-ripple{animation:ripple 1.5s infinite;border-radius:50%;background:var(--primary-start);}
+
+    @keyframes skewy{0%{transform:skewX(0)}50%{transform:skewX(20deg)}100%{transform:skewX(0)}}
+    .demo-skew{animation:skewy 2s ease-in-out infinite;background:var(--accent-color);} 
+
+    .card-title{font-size:1rem;margin:0;text-align:center;color:#333}
+
+    /* Additional animations */
+    @keyframes fadeInOut{0%,100%{opacity:0}50%{opacity:1}}
+    .demo-fade{animation:fadeInOut 3s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes zoom{0%,100%{transform:scale(.5)}50%{transform:scale(1.2)}}
+    .demo-zoom{animation:zoom 2.5s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes rotateX{to{transform:rotateX(360deg)}}
+    .demo-rotateX{animation:rotateX 3s linear infinite;background:var(--accent-color);}
+
+    @keyframes rotateY{to{transform:rotateY(360deg)}}
+    .demo-rotateY{animation:rotateY 3s linear infinite;background:var(--accent-color);}
+
+    @keyframes wobble{0%{transform:none}15%{transform:translateX(-25%) rotate(-5deg)}30%{transform:translateX(20%) rotate(3deg)}45%{transform:translateX(-15%) rotate(-3deg)}60%{transform:translateX(10%) rotate(2deg)}75%{transform:translateX(-5%) rotate(-1deg)}100%{transform:none}}
+    .demo-wobble{animation:wobble 2s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes swirl{to{transform:rotate(720deg) scale(0)}}
+    .demo-swirl{animation:swirl 4s linear infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes slideUp{0%{transform:translateY(40px);opacity:0}100%{transform:translateY(-40px);opacity:1}}
+    .demo-slideUp{animation:slideUp 1.5s ease-in-out infinite alternate;background:var(--accent-color);}
+
+    @keyframes slideDown{0%{transform:translateY(-40px);opacity:0}100%{transform:translateY(40px);opacity:1}}
+    .demo-slideDown{animation:slideDown 1.5s ease-in-out infinite alternate;background:var(--accent-color);}
+
+    @keyframes flipX{to{transform:perspective(400px) rotateX(360deg)}}
+    .demo-flipX{animation:flipX 3s linear infinite;background:var(--accent-color);}
+
+    @keyframes flipY{to{transform:perspective(400px) rotateY(360deg)}}
+    .demo-flipY{animation:flipY 3s linear infinite;background:var(--accent-color);}
+
+    @keyframes orbit{to{transform:rotate(360deg)}}
+    .demo-orbit{position:relative;}
+    .demo-orbit:before{content:'';position:absolute;top:50%;left:50%;width:10px;height:10px;background:var(--accent-color);border-radius:50%;transform-origin:-30px;animation:orbit 2s linear infinite;}
+
+    @keyframes blink{0%,49%{opacity:0}50%,100%{opacity:1}}
+    .demo-blink{animation:blink 1s step-start infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes swing{20%{transform:rotate(15deg)}40%{transform:rotate(-10deg)}60%{transform:rotate(5deg)}80%{transform:rotate(-5deg)}100%{transform:rotate(0deg)}}
+    .demo-swing{transform-origin:top center;animation:swing 2s ease-in-out infinite;background:var(--accent-color);}
+
+    @keyframes jitter{0%,100%{transform:none}25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-3px)}}
+    .demo-jitter{animation:jitter .4s linear infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes scaleX{0%,100%{transform:scaleX(.4)}50%{transform:scaleX(1)}}
+    .demo-scaleX{animation:scaleX 2s ease-in-out infinite;background:var(--accent-color);}
+
+    @keyframes scaleY{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+    .demo-scaleY{animation:scaleY 2s ease-in-out infinite;background:var(--accent-color);}
+
+    /* Extra animations */
+    @keyframes heart{0%,100%{transform:scale(.8)}50%{transform:scale(1.1)}}
+    .demo-heart{animation:heart 1.2s ease-in-out infinite;background:var(--accent-color);clip-path:polygon(50% 0%,61% 13%,75% 16%,85% 27%,88% 41%,83% 55%,70% 70%,50% 87%,30% 70%,17% 55%,12% 41%,15% 27%,25% 16%,39% 13%);} 
+
+    @keyframes roll{to{transform:rotate(360deg)}}
+    .demo-roll{animation:roll 2s linear infinite;background:var(--accent-color);border-radius:10px;}
+
+    @keyframes wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .demo-wave{animation:wave 1.4s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes tilt{0%,100%{transform:rotate(0deg)}50%{transform:rotate(15deg)}}
+    .demo-tilt{animation:tilt 1.6s ease-in-out infinite;background:var(--accent-color);} 
+
+    /* === New batch === */
+    @keyframes spinScale{0%{transform:scale(.3) rotate(0)}100%{transform:scale(1) rotate(360deg)}}
+    .demo-spinScale{animation:spinScale 2s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes drop{0%{transform:translateY(-50px);opacity:0}100%{transform:translateY(0);opacity:1}}
+    .demo-drop{animation:drop 1s cubic-bezier(.25,.46,.45,.94) infinite alternate;background:var(--accent-color);}
+
+    @keyframes floaty{0%,100%{transform:translateY(-6px)}50%{transform:translateY(6px)}}
+    .demo-float{animation:floaty 3s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes pulseBorder{0%{box-shadow:0 0 0 0 rgba(255,40,92,.6)}70%{box-shadow:0 0 0 15px rgba(255,40,92,0)}100%{box-shadow:0 0 0 0 rgba(255,40,92,0)}}
+    .demo-pulseBorder{animation:pulseBorder 2s infinite;border-radius:50%;background:var(--accent-color);}
+
+    @keyframes shrink{0%,100%{transform:scale(1)}50%{transform:scale(.4)}}
+    .demo-shrink{animation:shrink 1.8s ease-in-out infinite;background:var(--accent-color);}
+
+    @keyframes stretch{0%,100%{transform:scaleX(1)}50%{transform:scaleX(1.8)}}
+    .demo-stretch{animation:stretch 1.8s ease-in-out infinite;background:var(--accent-color);}
+
+    @keyframes spiral{0%{transform:rotate(0) scale(0)}100%{transform:rotate(720deg) scale(1)}}
+    .demo-spiral{animation:spiral 3s linear infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes flipDiag{to{transform:perspective(400px) rotate3d(1,1,0,360deg)}}
+    .demo-flipDiag{animation:flipDiag 3s linear infinite;background:var(--accent-color);}
+
+    @keyframes fadeRotate{0%{opacity:0;transform:rotate(0)}100%{opacity:1;transform:rotate(360deg)}}
+    .demo-fadeRotate{animation:fadeRotate 2.5s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes jelly{0%,100%{transform:scale(1,1)}25%{transform:scale(.9,1.1)}50%{transform:scale(1.1,.9)}75%{transform:scale(.95,1.05)}}
+    .demo-jelly{animation:jelly 2s ease-in-out infinite;background:var(--accent-color);border-radius:10px;}
+
+    /* Final batch */
+    @keyframes hinge{0%{transform:rotate(0);}20%,60%{transform:rotate(80deg);}40%{transform:rotate(60deg);}80%{transform:rotate(60deg) translateY(0);}100%{transform:translateY(200px);opacity:0;}}
+    .demo-hinge{animation:hinge 3s ease-in-out infinite;background:var(--accent-color);transform-origin:top left;}
+
+    @keyframes breath{0%,100%{transform:scale(.95)}50%{transform:scale(1.05)}}
+    .demo-breath{animation:breath 4s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes bounceX{0%,100%{transform:translateX(0)}50%{transform:translateX(30px)}}
+    .demo-bounceX{animation:bounceX 1.6s ease-in-out infinite;background:var(--accent-color);}
+
+    @keyframes glow{0%,100%{box-shadow:0 0 0 rgba(255,40,92,0)}50%{box-shadow:0 0 20px rgba(255,40,92,.8)}}
+    .demo-glow{animation:glow 2s ease-in-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes shiver{0%,100%{transform:none}25%{transform:translateY(-2px)}50%{transform:translateY(2px)}75%{transform:translateY(-2px)}}
+    .demo-shiver{animation:shiver .3s linear infinite;background:var(--accent-color);}
+
+    @keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.1)}100%{transform:scale(1)}}
+    .demo-pop{animation:pop .8s ease-out infinite;background:var(--accent-color);border-radius:50%;}
+
+    @keyframes scan{0%{background-position:-100% 0}100%{background-position:100% 0}}
+    .demo-scan{background:linear-gradient(90deg,transparent 0%,var(--accent-color) 50%,transparent 100%);background-size:200% 100%;animation:scan 2s linear infinite;}
+
+    @keyframes morph{0%{border-radius:20%}50%{border-radius:50%}100%{border-radius:20%}}
+    .demo-morph{animation:morph 3s ease-in-out infinite;background:var(--accent-color);}
+
+    @keyframes fan{0%{transform:rotate(0)}100%{transform:rotate(1080deg)}}
+    .demo-fan{animation:fan 4s linear infinite;width:0;height:0;border-left:40px solid transparent;border-right:40px solid transparent;border-bottom:70px solid var(--accent-color);}
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Animation Systems</h1>
+
+  <div class="grid">
+    <div class="animation-card">
+      <div class="anim-demo demo-rotate"></div>
+      <p class="card-title">Rotate 360°</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-pulse"></div>
+      <p class="card-title">Pulse</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-slide"></div>
+      <p class="card-title">Slide</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-bounce"></div>
+      <p class="card-title">Bounce</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-shake"></div>
+      <p class="card-title">Shake</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-grow"></div>
+      <p class="card-title">Grow Bar</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-color"></div>
+      <p class="card-title">Color Shift</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-flip"></div>
+      <p class="card-title">3D Flip</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-ripple"></div>
+      <p class="card-title">Ripple</p>
+    </div>
+    <div class="animation-card">
+      <div class="anim-demo demo-skew"></div>
+      <p class="card-title">Skew</p>
+    </div>
+
+    <div class="animation-card"><div class="anim-demo demo-fade"></div><p class="card-title">Fade In/Out</p></div>
+    <div class="animation-card"><div class="anim-demo demo-zoom"></div><p class="card-title">Zoom</p></div>
+    <div class="animation-card"><div class="anim-demo demo-rotateX"></div><p class="card-title">Rotate X</p></div>
+    <div class="animation-card"><div class="anim-demo demo-rotateY"></div><p class="card-title">Rotate Y</p></div>
+    <div class="animation-card"><div class="anim-demo demo-wobble"></div><p class="card-title">Wobble</p></div>
+    <div class="animation-card"><div class="anim-demo demo-swirl"></div><p class="card-title">Swirl Out</p></div>
+    <div class="animation-card"><div class="anim-demo demo-slideUp"></div><p class="card-title">Slide Up</p></div>
+    <div class="animation-card"><div class="anim-demo demo-slideDown"></div><p class="card-title">Slide Down</p></div>
+    <div class="animation-card"><div class="anim-demo demo-flipX"></div><p class="card-title">Flip X</p></div>
+    <div class="animation-card"><div class="anim-demo demo-flipY"></div><p class="card-title">Flip Y</p></div>
+    <div class="animation-card"><div class="anim-demo demo-orbit"></div><p class="card-title">Orbit Dot</p></div>
+    <div class="animation-card"><div class="anim-demo demo-blink"></div><p class="card-title">Blink</p></div>
+    <div class="animation-card"><div class="anim-demo demo-swing"></div><p class="card-title">Swing</p></div>
+    <div class="animation-card"><div class="anim-demo demo-jitter"></div><p class="card-title">Jitter</p></div>
+    <div class="animation-card"><div class="anim-demo demo-scaleX"></div><p class="card-title">Scale X</p></div>
+    <div class="animation-card"><div class="anim-demo demo-scaleY"></div><p class="card-title">Scale Y</p></div>
+    <div class="animation-card"><div class="anim-demo demo-heart"></div><p class="card-title">Heart Beat</p></div>
+    <div class="animation-card"><div class="anim-demo demo-roll"></div><p class="card-title">Roll</p></div>
+    <div class="animation-card"><div class="anim-demo demo-wave"></div><p class="card-title">Wave</p></div>
+    <div class="animation-card"><div class="anim-demo demo-tilt"></div><p class="card-title">Tilt</p></div>
+
+    <!-- New 10 cards -->
+    <div class="animation-card"><div class="anim-demo demo-spinScale"></div><p class="card-title">Spin & Scale</p></div>
+    <div class="animation-card"><div class="anim-demo demo-drop"></div><p class="card-title">Drop</p></div>
+    <div class="animation-card"><div class="anim-demo demo-float"></div><p class="card-title">Float</p></div>
+    <div class="animation-card"><div class="anim-demo demo-pulseBorder"></div><p class="card-title">Pulse Border</p></div>
+    <div class="animation-card"><div class="anim-demo demo-shrink"></div><p class="card-title">Shrink</p></div>
+    <div class="animation-card"><div class="anim-demo demo-stretch"></div><p class="card-title">Stretch</p></div>
+    <div class="animation-card"><div class="anim-demo demo-spiral"></div><p class="card-title">Spiral</p></div>
+    <div class="animation-card"><div class="anim-demo demo-flipDiag"></div><p class="card-title">Flip Diagonal</p></div>
+    <div class="animation-card"><div class="anim-demo demo-fadeRotate"></div><p class="card-title">Fade & Rotate</p></div>
+    <div class="animation-card"><div class="anim-demo demo-jelly"></div><p class="card-title">Jelly</p></div>
+    <div class="animation-card"><div class="anim-demo demo-hinge"></div><p class="card-title">Hinge</p></div>
+    <div class="animation-card"><div class="anim-demo demo-breath"></div><p class="card-title">Breath</p></div>
+    <div class="animation-card"><div class="anim-demo demo-bounceX"></div><p class="card-title">Bounce X</p></div>
+    <div class="animation-card"><div class="anim-demo demo-glow"></div><p class="card-title">Glow</p></div>
+    <div class="animation-card"><div class="anim-demo demo-shiver"></div><p class="card-title">Shiver</p></div>
+    <div class="animation-card"><div class="anim-demo demo-pop"></div><p class="card-title">Pop</p></div>
+    <div class="animation-card"><div class="anim-demo demo-scan"></div><p class="card-title">Scan</p></div>
+    <div class="animation-card"><div class="anim-demo demo-morph"></div><p class="card-title">Morph</p></div>
+    <div class="animation-card"><div class="anim-demo demo-fan"></div><p class="card-title">Fan</p></div>
+  </div>
+</body>
+</html>
