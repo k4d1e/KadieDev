@@ -3364,6 +3364,9 @@
     .font-dropdown-list li { padding: 6px 10px; cursor: pointer; color: #333; }
     .font-dropdown-list li:hover { color: #888; }
 
+    /* Utility */
+    .hidden{display:none;}
+
     /* Dropdown alignment fixes */
     .font-dropdown { display: block; width: 100%; }
     .font-dropdown-trigger { width: 100%; text-align: left; }
@@ -5242,9 +5245,16 @@
         list.appendChild(li);
       });
 
-      // Toggle list visibility
+      // Toggle list visibility and ensure selected item is in view
       trigger.addEventListener('click', () => {
-        list.classList.toggle('hidden');
+        const isHidden = list.classList.toggle('hidden');
+        if (!isHidden) {
+          // list just opened – scroll current selection into view
+          const current = Array.from(list.children).find(li => li.dataset.value === select.value);
+          if (current) {
+            current.scrollIntoView({ block: 'nearest' });
+          }
+        }
       });
 
       wrapper.appendChild(trigger);
