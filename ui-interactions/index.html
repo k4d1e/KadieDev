@@ -821,50 +821,55 @@
       gap: 8px;
     }
 
-    .customizer-selector {
+    /* Customizer Tabs */
+    .customizer-tabs {
+      margin-top: 10px;
+    }
+
+    .customizer-tabs-header {
       display: flex;
-      gap: 15px;
+      gap: 5px;
+      border-bottom: 2px solid #e0e0e0;
       margin-bottom: 25px;
-      flex-wrap: wrap;
     }
 
-    .element-selector {
+    .customizer-tab-button {
       flex: 1;
-      min-width: 250px;
-      padding: 12px 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: white;
-    }
-
-    .element-selector:hover,
-    .element-selector:focus {
-      border-color: var(--accent-color);
-      outline: none;
-    }
-
-    .preview-toggle {
-      padding: 12px 24px;
-      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
-      color: white;
+      padding: 12px 20px;
+      background: transparent;
       border: none;
-      border-radius: 10px;
-      font-weight: 600;
+      border-bottom: 3px solid transparent;
       cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #666;
       transition: all 0.3s ease;
       white-space: nowrap;
     }
 
-    .preview-toggle:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    .customizer-tab-button:hover {
+      color: var(--accent-color);
+      background: rgba(0, 0, 0, 0.02);
     }
 
-    .preview-toggle.active {
-      background: #4caf50;
+    .customizer-tab-button.active {
+      color: var(--accent-color);
+      border-bottom-color: var(--accent-color);
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .customizer-tab-panel {
+      display: none;
+    }
+
+    .customizer-tab-panel.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .customizer-panel-group {
@@ -3342,31 +3347,55 @@
           </div>
         </div>
 
-        <!-- Element Selector -->
-        <div class="customizer-selector">
-          <select class="element-selector" id="elementSelector">
-            <optgroup label="Global Elements">
-              <option value="page-background">Page Background</option>
-              <option value="page-title">Page Title</option>
-              <option value="page-subtitle">Page Subtitle</option>
-              <option value="back-button">Back Button</option>
-            </optgroup>
-            <optgroup label="Card Elements">
-              <option value="interaction-card">Card Container</option>
-              <option value="interaction-title">Card Title</option>
-              <option value="interaction-description">Card Description</option>
-            </optgroup>
-            <optgroup label="CSS Variables">
-              <option value="css-variables">Global CSS Variables</option>
-            </optgroup>
-          </select>
-          <button class="preview-toggle" id="previewToggle">
-            <span>👁️</span> Highlight Element
-          </button>
-        </div>
+        <!-- Customizer Tabs -->
+        <div class="customizer-tabs">
+          <div class="customizer-tabs-header">
+            <button class="customizer-tab-button active" data-tab="typography">
+              📝 Typography
+            </button>
+            <button class="customizer-tab-button" data-tab="colors">
+              🎨 Colors
+            </button>
+            <button class="customizer-tab-button" data-tab="buttons">
+              🔘 Buttons
+            </button>
+            <button class="customizer-tab-button" data-tab="cards">
+              🃏 Cards
+            </button>
+          </div>
 
-        <!-- Dynamic Panels Will Be Inserted Here -->
-        <div id="customizationPanels"></div>
+          <!-- Typography Panel -->
+          <div class="customizer-tab-panel active" id="typographyPanel">
+            <div class="customizer-section">
+              <h3>Font Families (8-Category System)</h3>
+              <div class="customizer-panel-group" id="typographyControls"></div>
+            </div>
+          </div>
+
+          <!-- Colors Panel -->
+          <div class="customizer-tab-panel" id="colorsPanel">
+            <div class="customizer-section">
+              <h3>Theme Colors</h3>
+              <div class="customizer-panel-group" id="colorsControls"></div>
+            </div>
+          </div>
+
+          <!-- Buttons Panel -->
+          <div class="customizer-tab-panel" id="buttonsPanel">
+            <div class="customizer-section">
+              <h3>Button Styling</h3>
+              <div class="customizer-panel-group" id="buttonsControls"></div>
+            </div>
+          </div>
+
+          <!-- Cards Panel -->
+          <div class="customizer-tab-panel" id="cardsPanel">
+            <div class="customizer-section">
+              <h3>Card Styling</h3>
+              <div class="customizer-panel-group" id="cardsControls"></div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div class="customizer-footer">
@@ -4770,140 +4799,6 @@
     // ===== THEME CUSTOMIZER FUNCTIONALITY =====
     
     // Element definitions with customization options
-    const elementDefinitions = {
-      'css-variables': {
-        name: 'Global CSS Variables',
-        selectors: [':root'],
-        options: {
-          colors: [
-            { name: 'Primary Gradient Start', property: '--primary-start', type: 'color' },
-            { name: 'Primary Gradient End', property: '--primary-end', type: 'color' },
-            { name: 'Background Gradient Start', property: '--bg-start', type: 'color' },
-            { name: 'Background Gradient End', property: '--bg-end', type: 'color' },
-            { name: 'Accent Color', property: '--accent-color', type: 'color' }
-          ],
-          typography: [
-            { name: '1. Heading Font (Card Titles)', property: '--font-heading', type: 'font' },
-            { name: '2. Body Font (Descriptions)', property: '--font-body', type: 'font' },
-            { name: '3. Action Font (Buttons)', property: '--font-action', type: 'font' },
-            { name: '4. Display Font (Values/Numbers)', property: '--font-display', type: 'font' },
-            { name: '5. Menu Font (Navigation)', property: '--font-menu', type: 'font' },
-            { name: '6. Input Font (Form Fields)', property: '--font-input', type: 'font' },
-            { name: '7. Status Font (Info Text)', property: '--font-status', type: 'font' },
-            { name: '8. Supporting Font (Content)', property: '--font-supporting', type: 'font' }
-          ]
-        }
-      },
-      'page-background': {
-        name: 'Page Background',
-        selectors: ['body'],
-        options: {
-          colors: [
-            { name: 'Background Gradient Start', property: '--bg-start', type: 'color' },
-            { name: 'Background Gradient End', property: '--bg-end', type: 'color' }
-          ],
-          spacing: [
-            { name: 'Padding', property: 'padding', type: 'text', unit: 'px' }
-          ]
-        }
-      },
-      'page-title': {
-        name: 'Page Title',
-        selectors: ['.page-title'],
-        options: {
-          typography: [
-            { name: 'Font Family', property: 'font-family', type: 'font' },
-            { name: 'Font Size', property: 'font-size', type: 'range', min: 1, max: 5, step: 0.1, unit: 'rem' },
-            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
-            { name: 'Letter Spacing', property: 'letter-spacing', type: 'range', min: -2, max: 10, step: 0.5, unit: 'px' }
-          ],
-          colors: [
-            { name: 'Text Color', property: 'color', type: 'color' }
-          ]
-        }
-      },
-      'page-subtitle': {
-        name: 'Page Subtitle',
-        selectors: ['.page-subtitle'],
-        options: {
-          typography: [
-            { name: 'Font Family', property: 'font-family', type: 'font' },
-            { name: 'Font Size', property: 'font-size', type: 'range', min: 0.5, max: 2, step: 0.1, unit: 'rem' },
-            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] }
-          ],
-          colors: [
-            { name: 'Text Color', property: 'color', type: 'color' }
-          ]
-        }
-      },
-      'back-button': {
-        name: 'Back Button',
-        selectors: ['.back-button'],
-        options: {
-          typography: [
-            { name: 'Font Size', property: 'font-size', type: 'range', min: 0.5, max: 1.5, step: 0.05, unit: 'rem' },
-            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['400', '500', '600', '700'] }
-          ],
-          colors: [
-            { name: 'Text Color', property: 'color', type: 'color' },
-            { name: 'Background Color', property: 'background-color', type: 'color' },
-            { name: 'Border Color', property: 'border-color', type: 'color' }
-          ],
-          spacing: [
-            { name: 'Padding', property: 'padding', type: 'text', unit: 'px' },
-            { name: 'Border Radius', property: 'border-radius', type: 'range', min: 0, max: 50, step: 1, unit: 'px' }
-          ]
-        }
-      },
-      'interaction-card': {
-        name: 'Card Container',
-        selectors: ['.interaction-card'],
-        options: {
-          colors: [
-            { name: 'Background Color', property: 'background-color', type: 'color' },
-            { name: 'Border Color', property: 'border-color', type: 'color' }
-          ],
-          spacing: [
-            { name: 'Padding', property: 'padding', type: 'text', unit: 'px' },
-            { name: 'Border Radius', property: 'border-radius', type: 'range', min: 0, max: 50, step: 1, unit: 'px' }
-          ],
-          effects: [
-            { name: 'Box Shadow', property: 'box-shadow', type: 'text' }
-          ]
-        }
-      },
-      'interaction-title': {
-        name: 'Card Title',
-        selectors: ['.interaction-title'],
-        options: {
-          typography: [
-            { name: 'Font Family', property: 'font-family', type: 'font' },
-            { name: 'Font Size', property: 'font-size', type: 'range', min: 0.8, max: 2.5, step: 0.1, unit: 'rem' },
-            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['400', '500', '600', '700', '800'] },
-            { name: 'Letter Spacing', property: 'letter-spacing', type: 'range', min: -1, max: 5, step: 0.1, unit: 'px' }
-          ],
-          colors: [
-            { name: 'Text Color', property: 'color', type: 'color' }
-          ]
-        }
-      },
-      'interaction-description': {
-        name: 'Card Description',
-        selectors: ['.interaction-description'],
-        options: {
-          typography: [
-            { name: 'Font Family', property: 'font-family', type: 'font' },
-            { name: 'Font Size', property: 'font-size', type: 'range', min: 0.5, max: 1.5, step: 0.05, unit: 'rem' },
-            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['300', '400', '500', '600'] },
-            { name: 'Line Height', property: 'line-height', type: 'range', min: 1, max: 2.5, step: 0.1, unit: '' }
-          ],
-          colors: [
-            { name: 'Text Color', property: 'color', type: 'color' }
-          ]
-        }
-      }
-    };
-
     // Available fonts for selection
     const availableFonts = [
       'Montserrat',
@@ -4924,8 +4819,6 @@
 
     // Customizer state
     let customizerState = {
-      currentElement: null,
-      highlightActive: false,
       customizations: {}
     };
 
@@ -4933,213 +4826,178 @@
     const customizerModal = document.getElementById('customizerModal');
     const customizerButton = document.getElementById('customizerButton');
     const customizerClose = document.getElementById('customizerClose');
-    const elementSelector = document.getElementById('elementSelector');
-    const previewToggle = document.getElementById('previewToggle');
-    const customizationPanels = document.getElementById('customizationPanels');
     const resetButton = document.getElementById('resetButton');
     const exportButton = document.getElementById('exportButton');
     const importButton = document.getElementById('importButton');
     const savePresetButton = document.getElementById('savePresetButton');
 
+    // Get customizer tab elements
+    const customizerTabButtons = document.querySelectorAll('.customizer-tab-button');
+    const customizerTabPanels = document.querySelectorAll('.customizer-tab-panel');
+
     // Open customizer modal
     customizerButton.addEventListener('click', () => {
       customizerModal.classList.add('active');
-      loadElementOptions();
+      initializeCustomizerPanels();
+      updatePreview('typography');
     });
 
     // Close customizer modal
     customizerClose.addEventListener('click', () => {
       customizerModal.classList.remove('active');
-      removeHighlight();
     });
 
     // Close on outside click
     customizerModal.addEventListener('click', (e) => {
       if (e.target === customizerModal) {
         customizerModal.classList.remove('active');
-        removeHighlight();
       }
     });
 
-    // Element selector change
-    elementSelector.addEventListener('change', () => {
-      loadElementOptions();
+    // Customizer tab switching
+    customizerTabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const tabName = button.getAttribute('data-tab');
+        
+        // Update active tab button
+        customizerTabButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Update active panel
+        customizerTabPanels.forEach(panel => panel.classList.remove('active'));
+        document.getElementById(tabName + 'Panel').classList.add('active');
+        
+        // Update preview
+        updatePreview(tabName);
+      });
     });
 
-    // Preview toggle
-    previewToggle.addEventListener('click', () => {
-      customizerState.highlightActive = !customizerState.highlightActive;
-      previewToggle.classList.toggle('active');
-      
-      if (customizerState.highlightActive) {
-        highlightElement();
-      } else {
-        removeHighlight();
-      }
-    });
+    // Initialize customizer panels
+    function initializeCustomizerPanels() {
+      // Typography Panel - All 8 font categories
+      const typographyOptions = [
+        { name: '1. Heading Font (Titles)', property: '--font-heading', type: 'font' },
+        { name: '2. Body Font (Descriptions)', property: '--font-body', type: 'font' },
+        { name: '3. Action Font (Buttons)', property: '--font-action', type: 'font' },
+        { name: '4. Display Font (Values)', property: '--font-display', type: 'font' },
+        { name: '5. Menu Font (Navigation)', property: '--font-menu', type: 'font' },
+        { name: '6. Input Font (Forms)', property: '--font-input', type: 'font' },
+        { name: '7. Status Font (Info)', property: '--font-status', type: 'font' },
+        { name: '8. Supporting Font (Content)', property: '--font-supporting', type: 'font' }
+      ];
+      document.getElementById('typographyControls').innerHTML = typographyOptions.map(option => generateControl(option)).join('');
 
-    // Load element customization options
-    function loadElementOptions() {
-      const selectedElement = elementSelector.value;
-      customizerState.currentElement = selectedElement;
-      
-      const definition = elementDefinitions[selectedElement];
-      if (!definition) {
-        customizationPanels.innerHTML = '<p>No customization options available for this element.</p>';
-        return;
-      }
+      // Colors Panel - All color variables
+      const colorOptions = [
+        { name: 'Primary Gradient Start', property: '--primary-start', type: 'color' },
+        { name: 'Primary Gradient End', property: '--primary-end', type: 'color' },
+        { name: 'Background Start', property: '--bg-start', type: 'color' },
+        { name: 'Background End', property: '--bg-end', type: 'color' },
+        { name: 'Accent Color', property: '--accent-color', type: 'color' }
+      ];
+      document.getElementById('colorsControls').innerHTML = colorOptions.map(option => generateControl(option)).join('');
 
-      let html = '';
+      // Buttons Panel - Button-specific styling
+      const buttonOptions = [
+        { name: 'Padding', property: 'button-padding', type: 'text', selector: 'button', cssProperty: 'padding', unit: 'px' },
+        { name: 'Border Radius', property: 'button-border-radius', type: 'range', min: 0, max: 50, step: 1, selector: 'button', cssProperty: 'border-radius', unit: 'px' },
+        { name: 'Font Size', property: 'button-font-size', type: 'range', min: 0.5, max: 1.5, step: 0.05, selector: 'button', cssProperty: 'font-size', unit: 'rem' },
+        { name: 'Font Weight', property: 'button-font-weight', type: 'select', values: ['400', '500', '600', '700', '800'], selector: 'button', cssProperty: 'font-weight' }
+      ];
+      document.getElementById('buttonsControls').innerHTML = buttonOptions.map(option => generateControl(option)).join('');
 
-      // Typography Section
-      if (definition.options.typography && definition.options.typography.length > 0) {
-        html += `
-          <div class="customizer-section">
-            <h3>📝 Typography</h3>
-            <div class="customizer-panel-group">
-              ${definition.options.typography.map(option => generateControl(option)).join('')}
-            </div>
-          </div>
-        `;
-      }
+      // Cards Panel - Card-specific styling
+      const cardOptions = [
+        { name: 'Card Background', property: 'card-background', type: 'color', selector: '.interaction-card', cssProperty: 'background-color' },
+        { name: 'Card Border Color', property: 'card-border', type: 'color', selector: '.interaction-card', cssProperty: 'border-color' },
+        { name: 'Card Padding', property: 'card-padding', type: 'text', selector: '.interaction-card', cssProperty: 'padding', unit: 'px' },
+        { name: 'Card Border Radius', property: 'card-border-radius', type: 'range', min: 0, max: 50, step: 1, selector: '.interaction-card', cssProperty: 'border-radius', unit: 'px' },
+        { name: 'Card Shadow', property: 'card-shadow', type: 'text', selector: '.interaction-card', cssProperty: 'box-shadow' },
+        { name: 'Title Font Size', property: 'card-title-size', type: 'range', min: 0.8, max: 2.5, step: 0.1, selector: '.interaction-title', cssProperty: 'font-size', unit: 'rem' },
+        { name: 'Description Font Size', property: 'card-desc-size', type: 'range', min: 0.5, max: 1.5, step: 0.05, selector: '.interaction-description', cssProperty: 'font-size', unit: 'rem' }
+      ];
+      document.getElementById('cardsControls').innerHTML = cardOptions.map(option => generateControl(option)).join('');
 
-      // Colors Section
-      if (definition.options.colors && definition.options.colors.length > 0) {
-        html += `
-          <div class="customizer-section">
-            <h3>🎨 Colors</h3>
-            <div class="customizer-panel-group">
-              ${definition.options.colors.map(option => generateControl(option)).join('')}
-            </div>
-          </div>
-        `;
-      }
-
-      // Spacing Section
-      if (definition.options.spacing && definition.options.spacing.length > 0) {
-        html += `
-          <div class="customizer-section">
-            <h3>📏 Spacing & Layout</h3>
-            <div class="customizer-panel-group">
-              ${definition.options.spacing.map(option => generateControl(option)).join('')}
-            </div>
-          </div>
-        `;
-      }
-
-      // Effects Section
-      if (definition.options.effects && definition.options.effects.length > 0) {
-        html += `
-          <div class="customizer-section">
-            <h3>✨ Effects</h3>
-            <div class="customizer-panel-group">
-              ${definition.options.effects.map(option => generateControl(option)).join('')}
-            </div>
-          </div>
-        `;
-      }
-
-      customizationPanels.innerHTML = html;
+      // Attach listeners to all controls
       attachControlListeners();
-      updatePreview();
-
-      if (customizerState.highlightActive) {
-        highlightElement();
-      }
     }
 
-    // Update preview section
-    function updatePreview() {
+    // Update preview section based on active tab
+    function updatePreview(tabName) {
       const previewContainer = document.getElementById('customizerPreview');
-      const definition = elementDefinitions[customizerState.currentElement];
-      
-      if (!definition) {
-        previewContainer.innerHTML = '<div class="preview-placeholder">No preview available</div>';
-        return;
-      }
-
-      // Create preview element based on type
       let previewHTML = '';
-      const elementKey = customizerState.currentElement;
       
-      switch(elementKey) {
-        case 'page-title':
-          previewHTML = '<h1 class="preview-element page-title-preview" id="previewElement">UI Interactions</h1>';
-          break;
-        
-        case 'page-subtitle':
-          previewHTML = '<p class="preview-element page-subtitle-preview" id="previewElement">30 Interactive Components to Explore</p>';
-          break;
-        
-        case 'back-button':
-          previewHTML = '<a href="#" class="preview-element back-button-preview" id="previewElement" onclick="return false;"><span>←</span> Back to Home</a>';
-          break;
-        
-        case 'interaction-card':
-          previewHTML = '<div class="preview-element interaction-card-preview" id="previewElement"><h3>Sample Card</h3><p>This is a preview of the card container.</p></div>';
-          break;
-        
-        case 'interaction-title':
-          previewHTML = '<h2 class="preview-element interaction-title-preview" id="previewElement">1. Toggle Switch</h2>';
-          break;
-        
-        case 'interaction-description':
-          previewHTML = '<p class="preview-element interaction-description-preview" id="previewElement">Classic on/off toggle with smooth animation</p>';
-          break;
-        
-        case 'page-background':
-          previewHTML = '<div class="preview-element page-background-preview" id="previewElement">Page Background Preview</div>';
-          break;
-        
-        case 'css-variables':
+      switch(tabName) {
+        case 'typography':
           previewHTML = `
             <div class="preview-element" id="previewElement" style="padding: 15px; max-width: 100%;">
               <div style="text-align: center; margin-bottom: 15px;">
-                <h3 style="background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); background-clip: text; -webkit-background-clip: text; color: transparent; -webkit-text-fill-color: transparent; font-size: 1.3rem; margin: 0 0 10px 0;">8-Category Font System</h3>
-                <div style="display: flex; gap: 8px; justify-content: center;">
-                  <div style="width: 30px; height: 30px; border-radius: 6px; background: var(--primary-start);"></div>
-                  <div style="width: 30px; height: 30px; border-radius: 6px; background: var(--primary-end);"></div>
-                  <div style="width: 30px; height: 30px; border-radius: 6px; background: var(--accent-color);"></div>
-                </div>
+                <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin: 0 0 8px 0;">8-Category Font System</h3>
+                <p style="font-family: var(--font-body); margin: 0; color: #666;">Live preview of all font categories</p>
               </div>
-              <div style="display: grid; gap: 8px; font-size: 0.75rem; text-align: left;">
-                <div style="font-family: var(--font-heading); font-weight: 600;">1. Heading</div>
-                <div style="font-family: var(--font-body);">2. Body</div>
-                <div style="font-family: var(--font-action); font-weight: 600;">3. Action</div>
-                <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem;">4. Display</div>
-                <div style="font-family: var(--font-menu);">5. Menu</div>
-                <div style="font-family: var(--font-input);">6. Input</div>
-                <div style="font-family: var(--font-status); font-size: 0.7rem;">7. Status</div>
-                <div style="font-family: var(--font-supporting); font-size: 0.7rem;">8. Support</div>
+              <div style="display: grid; gap: 10px; font-size: 0.85rem;">
+                <div style="font-family: var(--font-heading); font-weight: 600; font-size: 1.1rem;">1. Heading Font</div>
+                <div style="font-family: var(--font-body);">2. Body Font - Description text</div>
+                <button style="font-family: var(--font-action); padding: 8px 16px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; background: white;">3. Action Font</button>
+                <div style="font-family: var(--font-display); font-weight: 700; font-size: 1.8rem;">1234</div>
+                <div style="font-family: var(--font-menu);">5. Menu Font • Navigation</div>
+                <input type="text" placeholder="6. Input Font" style="font-family: var(--font-input); padding: 8px; border: 2px solid #e0e0e0; border-radius: 6px;">
+                <div style="font-family: var(--font-status); font-size: 0.8rem; color: #666;">7. Status Font - Info text</div>
+                <div style="font-family: var(--font-supporting); font-size: 0.85rem; line-height: 1.6;">8. Supporting Font - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
               </div>
             </div>
           `;
           break;
         
+        case 'colors':
+          previewHTML = `
+            <div class="preview-element" id="previewElement" style="padding: 20px; text-align: center;">
+              <h3 style="background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); background-clip: text; -webkit-background-clip: text; color: transparent; -webkit-text-fill-color: transparent; font-size: 1.5rem; margin: 0 0 15px 0;">Color Preview</h3>
+              <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;">
+                <div style="width: 50px; height: 50px; border-radius: 10px; background: var(--primary-start); box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+                <div style="width: 50px; height: 50px; border-radius: 10px; background: var(--primary-end); box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+                <div style="width: 50px; height: 50px; border-radius: 10px; background: var(--accent-color); box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+              </div>
+              <div style="height: 60px; border-radius: 10px; background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%); box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+            </div>
+          `;
+          break;
+        
+        case 'buttons':
+          previewHTML = `
+            <div class="preview-element" id="previewElement" style="padding: 20px; text-align: center;">
+              <h3 style="margin: 0 0 20px 0; font-size: 1.3rem;">Button Preview</h3>
+              <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+                <button style="padding: 12px 24px; background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">Primary Button</button>
+                <button style="padding: 12px 24px; background: white; color: var(--accent-color); border: 2px solid var(--accent-color); border-radius: 10px; cursor: pointer; font-weight: 600;">Secondary Button</button>
+                <button style="padding: 12px 24px; background: #4caf50; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">Success Button</button>
+              </div>
+            </div>
+          `;
+          break;
+        
+        case 'cards':
+          previewHTML = `
+            <div class="preview-element interaction-card" id="previewElement" style="max-width: 400px; margin: 0 auto;">
+              <h2 class="interaction-title">Sample Card Title</h2>
+              <p class="interaction-description">This is a preview of the card styling. Adjust the settings to see changes in real-time.</p>
+              <button style="padding: 10px 20px; background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">Card Button</button>
+            </div>
+          `;
+          break;
+        
         default:
-          previewHTML = '<div class="preview-placeholder">Preview not available for this element</div>';
+          previewHTML = '<div class="preview-placeholder">Select a tab to see preview</div>';
       }
       
       previewContainer.innerHTML = previewHTML;
-      
-      // Apply existing customizations to preview
-      const previewElement = document.getElementById('previewElement');
-      if (previewElement && customizerState.customizations[elementKey]) {
-        const customizations = customizerState.customizations[elementKey];
-        Object.keys(customizations).forEach(property => {
-          const value = customizations[property];
-          if (property.startsWith('--')) {
-            previewElement.style.setProperty(property, value);
-          } else {
-            previewElement.style[property] = value;
-          }
-        });
-      }
     }
 
     // Generate control HTML based on type
     function generateControl(option) {
       const controlId = `control-${option.property.replace(/[^a-z0-9]/gi, '-')}`;
+      const selector = option.selector || '';
+      const cssProperty = option.cssProperty || '';
       
       switch (option.type) {
         case 'font':
@@ -5147,7 +5005,7 @@
             <div class="customizer-control">
               <label class="customizer-label">${option.name}</label>
               <div class="font-preview-dropdown">
-                <select class="customizer-input font-select" data-property="${option.property}" id="${controlId}">
+                <select class="customizer-input font-select" data-property="${option.property}" data-selector="${selector}" data-css-property="${cssProperty}" id="${controlId}">
                   ${availableFonts.map(font => `<option value="'${font}', sans-serif">${font}</option>`).join('')}
                 </select>
               </div>
@@ -5159,8 +5017,8 @@
             <div class="customizer-control">
               <label class="customizer-label">${option.name}</label>
               <div class="customizer-color-group">
-                <input type="color" class="customizer-color-picker color-control" data-property="${option.property}" id="${controlId}">
-                <input type="text" class="customizer-input customizer-color-input color-control" data-property="${option.property}" placeholder="#000000">
+                <input type="color" class="customizer-color-picker color-control" data-property="${option.property}" data-selector="${selector}" data-css-property="${cssProperty}" id="${controlId}">
+                <input type="text" class="customizer-input customizer-color-input color-control" data-property="${option.property}" data-selector="${selector}" data-css-property="${cssProperty}" placeholder="#000000">
               </div>
             </div>
           `;
@@ -5170,7 +5028,7 @@
             <div class="customizer-control">
               <label class="customizer-label">${option.name}</label>
               <div class="customizer-row">
-                <input type="range" class="customizer-slider range-control" data-property="${option.property}" min="${option.min}" max="${option.max}" step="${option.step}" data-unit="${option.unit}" id="${controlId}">
+                <input type="range" class="customizer-slider range-control" data-property="${option.property}" data-selector="${selector}" data-css-property="${cssProperty}" min="${option.min}" max="${option.max}" step="${option.step}" data-unit="${option.unit}" id="${controlId}">
                 <input type="number" class="customizer-input range-value" min="${option.min}" max="${option.max}" step="${option.step}" value="${option.min}">
                 <span>${option.unit}</span>
               </div>
@@ -5181,7 +5039,7 @@
           return `
             <div class="customizer-control">
               <label class="customizer-label">${option.name}</label>
-              <select class="customizer-input select-control" data-property="${option.property}" id="${controlId}">
+              <select class="customizer-input select-control" data-property="${option.property}" data-selector="${selector}" data-css-property="${cssProperty}" id="${controlId}">
                 ${option.values.map(val => `<option value="${val}">${val}</option>`).join('')}
               </select>
             </div>
@@ -5191,7 +5049,7 @@
           return `
             <div class="customizer-control">
               <label class="customizer-label">${option.name}</label>
-              <input type="text" class="customizer-input text-control" data-property="${option.property}" data-unit="${option.unit || ''}" placeholder="e.g., 20px" id="${controlId}">
+              <input type="text" class="customizer-input text-control" data-property="${option.property}" data-selector="${selector}" data-css-property="${cssProperty}" data-unit="${option.unit || ''}" placeholder="e.g., 20px" id="${controlId}">
             </div>
           `;
         
@@ -5205,15 +5063,7 @@
       // Font selects
       document.querySelectorAll('.font-select').forEach(select => {
         select.addEventListener('change', (e) => {
-          applyCustomization(e.target.dataset.property, e.target.value);
-        });
-
-        // Font preview on hover
-        select.addEventListener('mouseover', (e) => {
-          if (e.target.tagName === 'OPTION') {
-            const font = e.target.value;
-            previewFontChange(select.dataset.property, font);
-          }
+          applyCustomization(e.target.dataset.property, e.target.value, e.target.dataset.selector, e.target.dataset.cssProperty);
         });
       });
 
@@ -5233,7 +5083,7 @@
             });
           }
           
-          applyCustomization(property, value);
+          applyCustomization(property, value, e.target.dataset.selector, e.target.dataset.cssProperty);
         });
       });
 
@@ -5245,109 +5095,54 @@
           const value = e.target.value;
           const unit = e.target.dataset.unit || '';
           valueDisplay.value = value;
-          applyCustomization(e.target.dataset.property, value + unit);
+          applyCustomization(e.target.dataset.property, value + unit, e.target.dataset.selector, e.target.dataset.cssProperty);
         });
 
         valueDisplay.addEventListener('input', (e) => {
           const value = e.target.value;
           const unit = control.dataset.unit || '';
           control.value = value;
-          applyCustomization(control.dataset.property, value + unit);
+          applyCustomization(control.dataset.property, value + unit, control.dataset.selector, control.dataset.cssProperty);
         });
       });
 
       // Select controls
       document.querySelectorAll('.select-control').forEach(control => {
         control.addEventListener('change', (e) => {
-          applyCustomization(e.target.dataset.property, e.target.value);
+          applyCustomization(e.target.dataset.property, e.target.value, e.target.dataset.selector, e.target.dataset.cssProperty);
         });
       });
 
       // Text controls
       document.querySelectorAll('.text-control').forEach(control => {
         control.addEventListener('input', (e) => {
-          applyCustomization(e.target.dataset.property, e.target.value);
+          applyCustomization(e.target.dataset.property, e.target.value, e.target.dataset.selector, e.target.dataset.cssProperty);
         });
       });
     }
 
     // Apply customization
-    function applyCustomization(property, value) {
-      const definition = elementDefinitions[customizerState.currentElement];
-      if (!definition) return;
-
+    function applyCustomization(property, value, selector, cssProperty) {
       // Store customization
-      if (!customizerState.customizations[customizerState.currentElement]) {
-        customizerState.customizations[customizerState.currentElement] = {};
+      if (!customizerState.customizations[property]) {
+        customizerState.customizations[property] = value;
+      } else {
+        customizerState.customizations[property] = value;
       }
-      customizerState.customizations[customizerState.currentElement][property] = value;
 
-      // Apply to page elements
-      definition.selectors.forEach(selector => {
+      // Apply CSS variables to :root
+      if (property.startsWith('--')) {
+        document.documentElement.style.setProperty(property, value);
+      }
+      // Apply to specific selectors
+      else if (selector && cssProperty) {
         const elements = document.querySelectorAll(selector);
         elements.forEach(element => {
-          if (property.startsWith('--')) {
-            // CSS variable
-            element.style.setProperty(property, value);
-          } else {
-            // Regular CSS property
-            element.style[property] = value;
-          }
+          element.style[cssProperty] = value;
         });
-      });
-
-      // Apply to preview element
-      const previewElement = document.getElementById('previewElement');
-      if (previewElement) {
-        if (property.startsWith('--')) {
-          previewElement.style.setProperty(property, value);
-        } else {
-          previewElement.style[property] = value;
-        }
       }
     }
 
-    // Preview font change temporarily
-    function previewFontChange(property, fontValue) {
-      const definition = elementDefinitions[customizerState.currentElement];
-      if (!definition) return;
-
-      // Apply to page elements
-      definition.selectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-          element.style[property] = fontValue;
-        });
-      });
-
-      // Apply to preview element
-      const previewElement = document.getElementById('previewElement');
-      if (previewElement) {
-        previewElement.style[property] = fontValue;
-      }
-    }
-
-    // Highlight element
-    function highlightElement() {
-      removeHighlight();
-      
-      const definition = elementDefinitions[customizerState.currentElement];
-      if (!definition) return;
-
-      definition.selectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-          element.classList.add('element-highlighted');
-        });
-      });
-    }
-
-    // Remove highlight
-    function removeHighlight() {
-      document.querySelectorAll('.element-highlighted').forEach(element => {
-        element.classList.remove('element-highlighted');
-      });
-    }
 
     // Reset all customizations
     resetButton.addEventListener('click', () => {
