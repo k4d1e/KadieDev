@@ -446,10 +446,34 @@
       top: 20px;
       right: 20px;
       z-index: 10001;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
     }
 
     .theme-dropdown {
       position: relative;
+    }
+
+    .customizer-button {
+      padding: 10px 20px;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .customizer-button:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     }
 
     .theme-button {
@@ -566,19 +590,394 @@
       opacity: 1;
     }
 
+    /* Theme Customizer Modal */
+    .customizer-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 10002;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .customizer-modal.active {
+      display: flex;
+    }
+
+    .customizer-panel {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .customizer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 30px;
+      border-bottom: 2px solid #f0f0f0;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+    }
+
+    .customizer-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .customizer-close {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.3s ease;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .customizer-close:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #333;
+      transform: rotate(90deg);
+    }
+
+    .customizer-body {
+      padding: 30px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .customizer-section {
+      margin-bottom: 30px;
+    }
+
+    .customizer-section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .customizer-selector {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .element-selector {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .element-selector:hover,
+    .element-selector:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+
+    .preview-toggle {
+      padding: 12px 24px;
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .preview-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .preview-toggle.active {
+      background: #4caf50;
+    }
+
+    .customizer-panel-group {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .customizer-control {
+      margin-bottom: 20px;
+    }
+
+    .customizer-control:last-child {
+      margin-bottom: 0;
+    }
+
+    .customizer-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .customizer-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .customizer-input:hover {
+      border-color: #ccc;
+    }
+
+    .customizer-input:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+
+    .customizer-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #e0e0e0;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .customizer-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .customizer-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .customizer-row {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .customizer-row .customizer-input {
+      flex: 1;
+    }
+
+    .customizer-row input[type="number"] {
+      max-width: 80px;
+    }
+
+    .customizer-color-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .customizer-color-picker {
+      width: 60px;
+      height: 40px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      background: none;
+    }
+
+    .customizer-color-picker::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    .customizer-color-picker::-webkit-color-swatch {
+      border: none;
+      border-radius: 6px;
+    }
+
+    .customizer-color-input {
+      flex: 1;
+    }
+
+    .customizer-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .customizer-checkbox input {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .font-preview-dropdown {
+      position: relative;
+    }
+
+    .font-preview-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 2px solid var(--accent-color);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .font-preview-list.active {
+      display: block;
+    }
+
+    .font-preview-item {
+      padding: 12px 15px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .font-preview-item:hover {
+      background: #f5f5f5;
+    }
+
+    .font-preview-item:last-child {
+      border-bottom: none;
+    }
+
+    .customizer-footer {
+      display: flex;
+      gap: 10px;
+      padding: 20px 30px;
+      border-top: 2px solid #f0f0f0;
+      background: #fafafa;
+      flex-wrap: wrap;
+    }
+
+    .customizer-footer button {
+      flex: 1;
+      min-width: 120px;
+      padding: 12px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .customizer-footer button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .customizer-footer .btn-primary {
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      color: white;
+      border-color: transparent;
+    }
+
+    .customizer-footer .btn-danger {
+      background: #f44336;
+      color: white;
+      border-color: transparent;
+    }
+
+    .element-highlighted {
+      outline: 3px solid var(--accent-color);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 4px rgba(255, 40, 92, 0.2);
+      transition: all 0.3s ease;
+    }
+
     @media (max-width: 480px) {
       .theme-selector {
         top: 10px;
         right: 10px;
+        flex-direction: column;
+        gap: 5px;
       }
 
-      .theme-button {
+      .theme-button,
+      .customizer-button {
         padding: 8px 16px;
         font-size: 0.85rem;
       }
 
       .theme-menu {
         min-width: 160px;
+      }
+
+      .customizer-panel {
+        max-width: 95vw;
+      }
+
+      .customizer-header h2 {
+        font-size: 1.4rem;
+      }
+
+      .customizer-body {
+        padding: 20px;
+      }
+
+      .customizer-footer {
+        padding: 15px 20px;
+      }
+
+      .customizer-footer button {
+        font-size: 0.85rem;
+        padding: 10px 15px;
       }
     }
 
@@ -2673,6 +3072,55 @@
         </div>
       </div>
     </div>
+    <button class="customizer-button" id="customizerButton">
+      <span>🎨</span>
+      <span>Customizer</span>
+    </button>
+  </div>
+
+  <!-- Theme Customizer Modal -->
+  <div class="customizer-modal" id="customizerModal">
+    <div class="customizer-panel">
+      <div class="customizer-header">
+        <h2><span>🎨</span> Theme Customizer</h2>
+        <button class="customizer-close" id="customizerClose">×</button>
+      </div>
+      
+      <div class="customizer-body" id="customizerBody">
+        <!-- Element Selector -->
+        <div class="customizer-selector">
+          <select class="element-selector" id="elementSelector">
+            <optgroup label="Global Elements">
+              <option value="page-background">Page Background</option>
+              <option value="page-title">Page Title</option>
+              <option value="page-subtitle">Page Subtitle</option>
+              <option value="back-button">Back Button</option>
+            </optgroup>
+            <optgroup label="Card Elements">
+              <option value="interaction-card">Card Container</option>
+              <option value="interaction-title">Card Title</option>
+              <option value="interaction-description">Card Description</option>
+            </optgroup>
+            <optgroup label="CSS Variables">
+              <option value="css-variables">Global CSS Variables</option>
+            </optgroup>
+          </select>
+          <button class="preview-toggle" id="previewToggle">
+            <span>👁️</span> Highlight Element
+          </button>
+        </div>
+
+        <!-- Dynamic Panels Will Be Inserted Here -->
+        <div id="customizationPanels"></div>
+      </div>
+      
+      <div class="customizer-footer">
+        <button id="resetButton" class="btn-danger">Reset All</button>
+        <button id="exportButton">Export Theme</button>
+        <button id="importButton">Import Theme</button>
+        <button id="savePresetButton" class="btn-primary">Save Preset</button>
+      </div>
+    </div>
   </div>
 
   <div class="container">
@@ -4063,6 +4511,619 @@
         }
       });
     }
+
+    // ===== THEME CUSTOMIZER FUNCTIONALITY =====
+    
+    // Element definitions with customization options
+    const elementDefinitions = {
+      'css-variables': {
+        name: 'Global CSS Variables',
+        selectors: [':root'],
+        options: {
+          colors: [
+            { name: 'Primary Gradient Start', property: '--primary-start', type: 'color' },
+            { name: 'Primary Gradient End', property: '--primary-end', type: 'color' },
+            { name: 'Background Gradient Start', property: '--bg-start', type: 'color' },
+            { name: 'Background Gradient End', property: '--bg-end', type: 'color' },
+            { name: 'Accent Color', property: '--accent-color', type: 'color' }
+          ],
+          typography: [
+            { name: 'Heading Font', property: '--font-heading', type: 'font' },
+            { name: 'Body Font', property: '--font-body', type: 'font' }
+          ]
+        }
+      },
+      'page-background': {
+        name: 'Page Background',
+        selectors: ['body'],
+        options: {
+          colors: [
+            { name: 'Background Gradient Start', property: '--bg-start', type: 'color' },
+            { name: 'Background Gradient End', property: '--bg-end', type: 'color' }
+          ],
+          spacing: [
+            { name: 'Padding', property: 'padding', type: 'text', unit: 'px' }
+          ]
+        }
+      },
+      'page-title': {
+        name: 'Page Title',
+        selectors: ['.page-title'],
+        options: {
+          typography: [
+            { name: 'Font Family', property: 'font-family', type: 'font' },
+            { name: 'Font Size', property: 'font-size', type: 'range', min: 1, max: 5, step: 0.1, unit: 'rem' },
+            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] },
+            { name: 'Letter Spacing', property: 'letter-spacing', type: 'range', min: -2, max: 10, step: 0.5, unit: 'px' }
+          ],
+          colors: [
+            { name: 'Text Color', property: 'color', type: 'color' }
+          ]
+        }
+      },
+      'page-subtitle': {
+        name: 'Page Subtitle',
+        selectors: ['.page-subtitle'],
+        options: {
+          typography: [
+            { name: 'Font Family', property: 'font-family', type: 'font' },
+            { name: 'Font Size', property: 'font-size', type: 'range', min: 0.5, max: 2, step: 0.1, unit: 'rem' },
+            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] }
+          ],
+          colors: [
+            { name: 'Text Color', property: 'color', type: 'color' }
+          ]
+        }
+      },
+      'back-button': {
+        name: 'Back Button',
+        selectors: ['.back-button'],
+        options: {
+          typography: [
+            { name: 'Font Size', property: 'font-size', type: 'range', min: 0.5, max: 1.5, step: 0.05, unit: 'rem' },
+            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['400', '500', '600', '700'] }
+          ],
+          colors: [
+            { name: 'Text Color', property: 'color', type: 'color' },
+            { name: 'Background Color', property: 'background-color', type: 'color' },
+            { name: 'Border Color', property: 'border-color', type: 'color' }
+          ],
+          spacing: [
+            { name: 'Padding', property: 'padding', type: 'text', unit: 'px' },
+            { name: 'Border Radius', property: 'border-radius', type: 'range', min: 0, max: 50, step: 1, unit: 'px' }
+          ]
+        }
+      },
+      'interaction-card': {
+        name: 'Card Container',
+        selectors: ['.interaction-card'],
+        options: {
+          colors: [
+            { name: 'Background Color', property: 'background-color', type: 'color' },
+            { name: 'Border Color', property: 'border-color', type: 'color' }
+          ],
+          spacing: [
+            { name: 'Padding', property: 'padding', type: 'text', unit: 'px' },
+            { name: 'Border Radius', property: 'border-radius', type: 'range', min: 0, max: 50, step: 1, unit: 'px' }
+          ],
+          effects: [
+            { name: 'Box Shadow', property: 'box-shadow', type: 'text' }
+          ]
+        }
+      },
+      'interaction-title': {
+        name: 'Card Title',
+        selectors: ['.interaction-title'],
+        options: {
+          typography: [
+            { name: 'Font Family', property: 'font-family', type: 'font' },
+            { name: 'Font Size', property: 'font-size', type: 'range', min: 0.8, max: 2.5, step: 0.1, unit: 'rem' },
+            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['400', '500', '600', '700', '800'] },
+            { name: 'Letter Spacing', property: 'letter-spacing', type: 'range', min: -1, max: 5, step: 0.1, unit: 'px' }
+          ],
+          colors: [
+            { name: 'Text Color', property: 'color', type: 'color' }
+          ]
+        }
+      },
+      'interaction-description': {
+        name: 'Card Description',
+        selectors: ['.interaction-description'],
+        options: {
+          typography: [
+            { name: 'Font Family', property: 'font-family', type: 'font' },
+            { name: 'Font Size', property: 'font-size', type: 'range', min: 0.5, max: 1.5, step: 0.05, unit: 'rem' },
+            { name: 'Font Weight', property: 'font-weight', type: 'select', values: ['300', '400', '500', '600'] },
+            { name: 'Line Height', property: 'line-height', type: 'range', min: 1, max: 2.5, step: 0.1, unit: '' }
+          ],
+          colors: [
+            { name: 'Text Color', property: 'color', type: 'color' }
+          ]
+        }
+      }
+    };
+
+    // Available fonts for selection
+    const availableFonts = [
+      'Montserrat',
+      'Playfair Display',
+      'Cormorant Garamond',
+      'Open Sans',
+      'Roboto',
+      'Lato',
+      'Poppins',
+      'Raleway',
+      'Merriweather',
+      'Source Sans Pro',
+      'Inter',
+      'Josefin Sans',
+      'Crimson Text',
+      'Libre Baskerville'
+    ];
+
+    // Customizer state
+    let customizerState = {
+      currentElement: null,
+      highlightActive: false,
+      customizations: {}
+    };
+
+    // Get customizer elements
+    const customizerModal = document.getElementById('customizerModal');
+    const customizerButton = document.getElementById('customizerButton');
+    const customizerClose = document.getElementById('customizerClose');
+    const elementSelector = document.getElementById('elementSelector');
+    const previewToggle = document.getElementById('previewToggle');
+    const customizationPanels = document.getElementById('customizationPanels');
+    const resetButton = document.getElementById('resetButton');
+    const exportButton = document.getElementById('exportButton');
+    const importButton = document.getElementById('importButton');
+    const savePresetButton = document.getElementById('savePresetButton');
+
+    // Open customizer modal
+    customizerButton.addEventListener('click', () => {
+      customizerModal.classList.add('active');
+      loadElementOptions();
+    });
+
+    // Close customizer modal
+    customizerClose.addEventListener('click', () => {
+      customizerModal.classList.remove('active');
+      removeHighlight();
+    });
+
+    // Close on outside click
+    customizerModal.addEventListener('click', (e) => {
+      if (e.target === customizerModal) {
+        customizerModal.classList.remove('active');
+        removeHighlight();
+      }
+    });
+
+    // Element selector change
+    elementSelector.addEventListener('change', () => {
+      loadElementOptions();
+    });
+
+    // Preview toggle
+    previewToggle.addEventListener('click', () => {
+      customizerState.highlightActive = !customizerState.highlightActive;
+      previewToggle.classList.toggle('active');
+      
+      if (customizerState.highlightActive) {
+        highlightElement();
+      } else {
+        removeHighlight();
+      }
+    });
+
+    // Load element customization options
+    function loadElementOptions() {
+      const selectedElement = elementSelector.value;
+      customizerState.currentElement = selectedElement;
+      
+      const definition = elementDefinitions[selectedElement];
+      if (!definition) {
+        customizationPanels.innerHTML = '<p>No customization options available for this element.</p>';
+        return;
+      }
+
+      let html = '';
+
+      // Typography Section
+      if (definition.options.typography && definition.options.typography.length > 0) {
+        html += `
+          <div class="customizer-section">
+            <h3>📝 Typography</h3>
+            <div class="customizer-panel-group">
+              ${definition.options.typography.map(option => generateControl(option)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Colors Section
+      if (definition.options.colors && definition.options.colors.length > 0) {
+        html += `
+          <div class="customizer-section">
+            <h3>🎨 Colors</h3>
+            <div class="customizer-panel-group">
+              ${definition.options.colors.map(option => generateControl(option)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Spacing Section
+      if (definition.options.spacing && definition.options.spacing.length > 0) {
+        html += `
+          <div class="customizer-section">
+            <h3>📏 Spacing & Layout</h3>
+            <div class="customizer-panel-group">
+              ${definition.options.spacing.map(option => generateControl(option)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Effects Section
+      if (definition.options.effects && definition.options.effects.length > 0) {
+        html += `
+          <div class="customizer-section">
+            <h3>✨ Effects</h3>
+            <div class="customizer-panel-group">
+              ${definition.options.effects.map(option => generateControl(option)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      customizationPanels.innerHTML = html;
+      attachControlListeners();
+
+      if (customizerState.highlightActive) {
+        highlightElement();
+      }
+    }
+
+    // Generate control HTML based on type
+    function generateControl(option) {
+      const controlId = `control-${option.property.replace(/[^a-z0-9]/gi, '-')}`;
+      
+      switch (option.type) {
+        case 'font':
+          return `
+            <div class="customizer-control">
+              <label class="customizer-label">${option.name}</label>
+              <div class="font-preview-dropdown">
+                <select class="customizer-input font-select" data-property="${option.property}" id="${controlId}">
+                  ${availableFonts.map(font => `<option value="'${font}', sans-serif">${font}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+          `;
+        
+        case 'color':
+          return `
+            <div class="customizer-control">
+              <label class="customizer-label">${option.name}</label>
+              <div class="customizer-color-group">
+                <input type="color" class="customizer-color-picker color-control" data-property="${option.property}" id="${controlId}">
+                <input type="text" class="customizer-input customizer-color-input color-control" data-property="${option.property}" placeholder="#000000">
+              </div>
+            </div>
+          `;
+        
+        case 'range':
+          return `
+            <div class="customizer-control">
+              <label class="customizer-label">${option.name}</label>
+              <div class="customizer-row">
+                <input type="range" class="customizer-slider range-control" data-property="${option.property}" min="${option.min}" max="${option.max}" step="${option.step}" data-unit="${option.unit}" id="${controlId}">
+                <input type="number" class="customizer-input range-value" min="${option.min}" max="${option.max}" step="${option.step}" value="${option.min}">
+                <span>${option.unit}</span>
+              </div>
+            </div>
+          `;
+        
+        case 'select':
+          return `
+            <div class="customizer-control">
+              <label class="customizer-label">${option.name}</label>
+              <select class="customizer-input select-control" data-property="${option.property}" id="${controlId}">
+                ${option.values.map(val => `<option value="${val}">${val}</option>`).join('')}
+              </select>
+            </div>
+          `;
+        
+        case 'text':
+          return `
+            <div class="customizer-control">
+              <label class="customizer-label">${option.name}</label>
+              <input type="text" class="customizer-input text-control" data-property="${option.property}" data-unit="${option.unit || ''}" placeholder="e.g., 20px" id="${controlId}">
+            </div>
+          `;
+        
+        default:
+          return '';
+      }
+    }
+
+    // Attach event listeners to controls
+    function attachControlListeners() {
+      // Font selects
+      document.querySelectorAll('.font-select').forEach(select => {
+        select.addEventListener('change', (e) => {
+          applyCustomization(e.target.dataset.property, e.target.value);
+        });
+
+        // Font preview on hover
+        select.addEventListener('mouseover', (e) => {
+          if (e.target.tagName === 'OPTION') {
+            const font = e.target.value;
+            previewFontChange(select.dataset.property, font);
+          }
+        });
+      });
+
+      // Color controls
+      document.querySelectorAll('.color-control').forEach(control => {
+        control.addEventListener('input', (e) => {
+          const property = e.target.dataset.property;
+          const value = e.target.value;
+          
+          // Sync color picker and text input
+          const parent = e.target.closest('.customizer-color-group');
+          if (parent) {
+            parent.querySelectorAll('.color-control').forEach(input => {
+              if (input !== e.target) {
+                input.value = value;
+              }
+            });
+          }
+          
+          applyCustomization(property, value);
+        });
+      });
+
+      // Range controls
+      document.querySelectorAll('.range-control').forEach(control => {
+        const valueDisplay = control.nextElementSibling;
+        
+        control.addEventListener('input', (e) => {
+          const value = e.target.value;
+          const unit = e.target.dataset.unit || '';
+          valueDisplay.value = value;
+          applyCustomization(e.target.dataset.property, value + unit);
+        });
+
+        valueDisplay.addEventListener('input', (e) => {
+          const value = e.target.value;
+          const unit = control.dataset.unit || '';
+          control.value = value;
+          applyCustomization(control.dataset.property, value + unit);
+        });
+      });
+
+      // Select controls
+      document.querySelectorAll('.select-control').forEach(control => {
+        control.addEventListener('change', (e) => {
+          applyCustomization(e.target.dataset.property, e.target.value);
+        });
+      });
+
+      // Text controls
+      document.querySelectorAll('.text-control').forEach(control => {
+        control.addEventListener('input', (e) => {
+          applyCustomization(e.target.dataset.property, e.target.value);
+        });
+      });
+    }
+
+    // Apply customization
+    function applyCustomization(property, value) {
+      const definition = elementDefinitions[customizerState.currentElement];
+      if (!definition) return;
+
+      // Store customization
+      if (!customizerState.customizations[customizerState.currentElement]) {
+        customizerState.customizations[customizerState.currentElement] = {};
+      }
+      customizerState.customizations[customizerState.currentElement][property] = value;
+
+      // Apply to elements
+      definition.selectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          if (property.startsWith('--')) {
+            // CSS variable
+            element.style.setProperty(property, value);
+          } else {
+            // Regular CSS property
+            element.style[property] = value;
+          }
+        });
+      });
+    }
+
+    // Preview font change temporarily
+    function previewFontChange(property, fontValue) {
+      const definition = elementDefinitions[customizerState.currentElement];
+      if (!definition) return;
+
+      definition.selectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          element.style[property] = fontValue;
+        });
+      });
+    }
+
+    // Highlight element
+    function highlightElement() {
+      removeHighlight();
+      
+      const definition = elementDefinitions[customizerState.currentElement];
+      if (!definition) return;
+
+      definition.selectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          element.classList.add('element-highlighted');
+        });
+      });
+    }
+
+    // Remove highlight
+    function removeHighlight() {
+      document.querySelectorAll('.element-highlighted').forEach(element => {
+        element.classList.remove('element-highlighted');
+      });
+    }
+
+    // Reset all customizations
+    resetButton.addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset all customizations? This cannot be undone.')) {
+        customizerState.customizations = {};
+        location.reload();
+      }
+    });
+
+    // Export theme
+    exportButton.addEventListener('click', () => {
+      const themeData = {
+        name: 'Custom Theme',
+        created: new Date().toISOString(),
+        customizations: customizerState.customizations
+      };
+      
+      const dataStr = JSON.stringify(themeData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'custom-theme.json';
+      link.click();
+      
+      URL.revokeObjectURL(url);
+    });
+
+    // Import theme
+    importButton.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      
+      input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const themeData = JSON.parse(event.target.result);
+            customizerState.customizations = themeData.customizations || {};
+            
+            // Apply all customizations
+            Object.keys(customizerState.customizations).forEach(elementKey => {
+              const elementCustomizations = customizerState.customizations[elementKey];
+              const definition = elementDefinitions[elementKey];
+              
+              if (definition) {
+                Object.keys(elementCustomizations).forEach(property => {
+                  const value = elementCustomizations[property];
+                  definition.selectors.forEach(selector => {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(element => {
+                      if (property.startsWith('--')) {
+                        element.style.setProperty(property, value);
+                      } else {
+                        element.style[property] = value;
+                      }
+                    });
+                  });
+                });
+              }
+            });
+            
+            alert('Theme imported successfully!');
+            loadElementOptions(); // Refresh the current view
+          } catch (error) {
+            alert('Error importing theme. Please check the file format.');
+            console.error(error);
+          }
+        };
+        
+        reader.readAsText(file);
+      });
+      
+      input.click();
+    });
+
+    // Save preset
+    savePresetButton.addEventListener('click', () => {
+      const presetName = prompt('Enter a name for this preset:');
+      if (!presetName) return;
+      
+      const presets = JSON.parse(localStorage.getItem('themePresets') || '{}');
+      presets[presetName] = {
+        created: new Date().toISOString(),
+        customizations: customizerState.customizations
+      };
+      
+      localStorage.setItem('themePresets', JSON.stringify(presets));
+      alert(`Preset "${presetName}" saved successfully!`);
+    });
+
+    // Load saved customizations from localStorage
+    function loadSavedCustomizations() {
+      const saved = localStorage.getItem('currentCustomizations');
+      if (saved) {
+        try {
+          customizerState.customizations = JSON.parse(saved);
+          
+          // Apply all saved customizations
+          Object.keys(customizerState.customizations).forEach(elementKey => {
+            const elementCustomizations = customizerState.customizations[elementKey];
+            const definition = elementDefinitions[elementKey];
+            
+            if (definition) {
+              Object.keys(elementCustomizations).forEach(property => {
+                const value = elementCustomizations[property];
+                definition.selectors.forEach(selector => {
+                  const elements = document.querySelectorAll(selector);
+                  elements.forEach(element => {
+                    if (property.startsWith('--')) {
+                      element.style.setProperty(property, value);
+                    } else {
+                      element.style[property] = value;
+                    }
+                  });
+                });
+              });
+            }
+          });
+        } catch (error) {
+          console.error('Error loading saved customizations:', error);
+        }
+      }
+    }
+
+    // Save customizations to localStorage whenever they change
+    function saveCustomizations() {
+      localStorage.setItem('currentCustomizations', JSON.stringify(customizerState.customizations));
+    }
+
+    // Override applyCustomization to also save
+    const originalApplyCustomization = applyCustomization;
+    applyCustomization = function(property, value) {
+      originalApplyCustomization(property, value);
+      saveCustomizations();
+    };
+
+    // Load saved customizations on page load
+    loadSavedCustomizations();
   </script>
 </body>
 </html>
