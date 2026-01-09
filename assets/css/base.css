@@ -3,6 +3,17 @@
    Typography, colors, resets
    ========================================================================== */
 
+:root {
+    --primary-start: #ff285c;
+    --primary-end: #b010fb;
+    --bg-start: #f5f7fa;
+    --bg-end: #c3cfe2;
+    --accent-color: #ff285c;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-action: 'Montserrat', sans-serif;
+}
+
 /* ===== RESETS ===== */
 /* Box-sizing reset - critical for layout calculations */
 * {
