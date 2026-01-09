@@ -38,6 +38,7 @@
 
 /* Tall 9:16 variant */
 .bento-card.tall {
+    flex: 0 0 200px; /* prevent stretching */
     aspect-ratio: 9 / 16;
 }
 .bento-card.wide {
