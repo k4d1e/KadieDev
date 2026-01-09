@@ -26,7 +26,9 @@
       google: {
         families: [
           "Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic",
-          "Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"
+          "Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic",
+          "Playfair Display:300,400,500,600,700",
+          "Cormorant Garamond:300,300italic,400,400italic,500,500italic,600,600italic,700,700italic"
         ]
       }
     });
@@ -36,11 +38,398 @@
   <link href="../assets/images/favicon.svg" rel="icon" type="image/svg+xml"/>
   
   <style>
+    /* Theme Variables */
+    :root {
+      --primary-start: #ff285c;
+      --primary-end: #b010fb;
+      --bg-start: #f5f7fa;
+      --bg-end: #c3cfe2;
+      --accent-color: #ff285c;
+      --font-heading: 'Montserrat', sans-serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+
+    body.theme-blue {
+      --primary-start: #0066ff;
+      --primary-end: #00ccff;
+      --bg-start: #e3f2fd;
+      --bg-end: #90caf9;
+      --accent-color: #0066ff;
+    }
+
+    body.theme-green {
+      --primary-start: #00c853;
+      --primary-end: #64dd17;
+      --bg-start: #e8f5e9;
+      --bg-end: #81c784;
+      --accent-color: #00c853;
+    }
+
+    body.theme-kyoto {
+      --primary-start: #E8DAB2;
+      --primary-end: #D4A59A;
+      --bg-start: #141414;
+      --bg-end: #2B2525;
+      --accent-color: #F0E6D2;
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'Cormorant Garamond', serif;
+    }
+
+    /* Kyoto Theme Dark Mode Adjustments */
+    body.theme-kyoto {
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
+
+    body.theme-kyoto h1,
+    body.theme-kyoto h2,
+    body.theme-kyoto h3,
+    body.theme-kyoto .page-title {
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    body.theme-kyoto .page-title {
+      background: none;
+      color: #F0E6D2;
+      -webkit-text-fill-color: #F0E6D2;
+    }
+
+    body.theme-kyoto .interaction-title {
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    body.theme-kyoto .interaction-description {
+      font-weight: 300;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    body.theme-kyoto .interaction-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(240, 230, 210, 0.1);
+    }
+
+    body.theme-kyoto .interaction-title {
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    body.theme-kyoto .interaction-description {
+      color: #B8B0A0;
+    }
+
+    body.theme-kyoto .page-subtitle {
+      color: #B8B0A0;
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.5px;
+    }
+
+    body.theme-kyoto .back-button {
+      background: rgba(255, 255, 255, 0.05);
+      color: #F0E6D2;
+      border-color: rgba(240, 230, 210, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    body.theme-kyoto .back-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent-color);
+    }
+
+    body.theme-kyoto .theme-button {
+      background: rgba(255, 255, 255, 0.05);
+      color: #F0E6D2;
+      border-color: rgba(240, 230, 210, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    body.theme-kyoto input,
+    body.theme-kyoto button:not(.theme-button):not(.back-button),
+    body.theme-kyoto select,
+    body.theme-kyoto textarea {
+      background: rgba(255, 255, 255, 0.05);
+      color: #F0E6D2;
+      border-color: rgba(240, 230, 210, 0.2);
+      font-family: var(--font-body);
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
+
+    body.theme-kyoto button {
+      font-weight: 400;
+    }
+
+    body.theme-kyoto .nav-button {
+      color: #F0E6D2;
+    }
+
+    body.theme-kyoto .context-area,
+    body.theme-kyoto .gallery-item,
+    body.theme-kyoto .flip-card-front,
+    body.theme-kyoto .flip-card-back {
+      background: linear-gradient(135deg, var(--primary-start), var(--primary-end)) !important;
+      color: #141414;
+      font-weight: 500;
+    }
+
+    body.theme-kyoto .dropdown-button,
+    body.theme-kyoto .search-input,
+    body.theme-kyoto .password-input,
+    body.theme-kyoto .tag-input,
+    body.theme-kyoto .clipboard-input {
+      background: rgba(255, 255, 255, 0.05);
+      color: #F0E6D2;
+      border-color: rgba(240, 230, 210, 0.2);
+    }
+
+    body.theme-kyoto .accordion-header {
+      background: rgba(255, 255, 255, 0.03);
+      color: #F0E6D2;
+    }
+
+    body.theme-kyoto .accordion-content-inner {
+      color: #B8B0A0;
+    }
+
+    body.theme-kyoto .tabs-header {
+      border-bottom-color: rgba(240, 230, 210, 0.15);
+      background: rgba(0, 0, 0, 0.2);
+      padding: 3px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    body.theme-kyoto .tab-button {
+      font-size: 0.8rem;
+    }
+
+    body.theme-kyoto .tab-button {
+      color: #B8B0A0;
+      padding: 6px 10px;
+    }
+
+    body.theme-kyoto .tab-button.active {
+      color: var(--accent-color);
+      background: rgba(240, 230, 210, 0.1);
+      border-radius: 6px;
+    }
+
+    body.theme-kyoto .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      z-index: -1;
+    }
+
+    body.theme-kyoto .tab-panel {
+      color: #F0E6D2;
+    }
+
+    body.theme-kyoto .sortable-item {
+      background: rgba(255, 255, 255, 0.03);
+      color: #F0E6D2;
+      border-color: rgba(240, 230, 210, 0.2);
+    }
+
+    /* Elements inside cards use gradient */
+    body.theme-kyoto .rating-value,
+    body.theme-kyoto .range-value,
+    body.theme-kyoto .counter-display,
+    body.theme-kyoto .circular-text,
+    body.theme-kyoto .progress-text {
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Elements outside cards or secondary use solid color */
+    body.theme-kyoto .strength-text,
+    body.theme-kyoto .pagination-info {
+      color: #F0E6D2;
+    }
+
+    body.theme-kyoto .stepper-label {
+      color: #B8B0A0;
+    }
+
+    body.theme-kyoto .stepper-step.active .stepper-label {
+      color: var(--accent-color);
+    }
+
+    body.theme-kyoto .drawer-sidebar,
+    body.theme-kyoto .modal-content {
+      background: #1a1a1a;
+      color: #F0E6D2;
+    }
+
+    body.theme-kyoto .drawer-item {
+      color: #F0E6D2;
+    }
+
+    body.theme-kyoto .drawer-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    body.theme-kyoto .toggle-switch {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(240, 230, 210, 0.2);
+    }
+
+    body.theme-kyoto .toggle-knob {
+      background: #6a6a6a;
+    }
+
+    body.theme-kyoto .toggle-switch.active .toggle-knob {
+      background: #F0E6D2;
+    }
+
+    body.theme-kyoto #toggleStatus {
+      color: #B8B0A0;
+    }
+
+    body.theme-kyoto .toggle-switch.active ~ #toggleStatus {
+      color: var(--accent-color);
+    }
+
+    /* Kyoto Theme - Like Button Styling */
+    body.theme-kyoto .like-button {
+      color: #B8B0A0;
+    }
+
+    body.theme-kyoto .like-icon {
+      fill: #B8B0A0;
+    }
+
+    body.theme-kyoto .like-button.liked {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(240, 230, 210, 0.3);
+      color: #F0E6D2;
+    }
+
+    body.theme-kyoto .like-button.liked .like-icon {
+      fill: url(#kyotoGradient);
+    }
+
+    /* Kyoto Theme - Draggable Slider Styling */
+    body.theme-kyoto .cards-container {
+      background: transparent;
+      scrollbar-color: var(--primary-start) transparent;
+    }
+
+    body.theme-kyoto .cards-container::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    body.theme-kyoto .cards-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    body.theme-kyoto .cards-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, var(--primary-start), var(--primary-end));
+      border-radius: 10px;
+    }
+
+    body.theme-kyoto .draggable-card {
+      background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+      color: #141414;
+      font-weight: 500;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    body.theme-kyoto .draggable-card:hover {
+      opacity: 1;
+    }
+
+    body.theme-kyoto .flip-card-front,
+    body.theme-kyoto .flip-card-back {
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+    }
+
+    body.theme-kyoto .flip-card:hover .flip-card-front,
+    body.theme-kyoto .flip-card:hover .flip-card-back {
+      opacity: 1;
+    }
+
+    body.theme-kyoto .flip-card-front h3,
+    body.theme-kyoto .flip-card-back h3 {
+      color: #141414;
+      background: none;
+      -webkit-text-fill-color: #141414;
+    }
+
+    body.theme-kyoto .flip-card-front p,
+    body.theme-kyoto .flip-card-back p {
+      color: #141414;
+    }
+
+    body.theme-kyoto .gallery-item {
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    body.theme-kyoto .gallery-item:hover {
+      opacity: 1;
+    }
+
+    body.theme-kyoto .gallery-item span {
+      color: #141414;
+      font-weight: 500;
+    }
+
+    body.theme-kyoto .context-area {
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+    }
+
+    body.theme-kyoto .context-area:hover {
+      opacity: 1;
+    }
+
+    body.theme-kyoto .carousel-slide {
+      background: linear-gradient(135deg, var(--primary-start), var(--primary-end)) !important;
+      color: #141414;
+      font-weight: 500;
+      opacity: 0.75;
+      transition: opacity 0.3s ease;
+    }
+
+    body.theme-kyoto .carousel-slide.active {
+      opacity: 0.9;
+    }
+
+    body.theme-kyoto .carousel-slide:nth-child(2) {
+      background: linear-gradient(135deg, #C5B89A, #B88A7E) !important;
+    }
+
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      font-family: var(--font-body);
+      background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
       padding: 40px 20px;
       min-height: 100vh;
+      transition: background 0.5s ease, font-family 0.3s ease;
+    }
+
+    h1, h2, h3, h4, h5, h6,
+    .page-title,
+    .page-subtitle,
+    .interaction-title {
+      font-family: var(--font-heading);
+      transition: font-family 0.3s ease;
     }
 
     * {
@@ -49,6 +438,148 @@
 
     input, button, select, textarea {
       max-width: 100%;
+    }
+
+    /* Theme Selector */
+    .theme-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10001;
+    }
+
+    .theme-dropdown {
+      position: relative;
+    }
+
+    .theme-button {
+      padding: 10px 20px;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-button:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .theme-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+    }
+
+    .theme-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .theme-dropdown.active .theme-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .theme-option {
+      padding: 12px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.2s ease;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .theme-option:first-child {
+      border-radius: 12px 12px 0 0;
+    }
+
+    .theme-option:last-child {
+      border-bottom: none;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .theme-option:hover {
+      background: #f8f8f8;
+    }
+
+    .theme-option.active {
+      background: #f0f0f0;
+    }
+
+    .theme-option-color {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #e0e0e0;
+    }
+
+    .theme-option-color.default {
+      background: linear-gradient(135deg, #ff285c, #b010fb);
+    }
+
+    .theme-option-color.blue {
+      background: linear-gradient(135deg, #0066ff, #00ccff);
+    }
+
+    .theme-option-color.green {
+      background: linear-gradient(135deg, #00c853, #64dd17);
+    }
+
+    .theme-option-color.kyoto {
+      background: linear-gradient(135deg, #E8DAB2, #D4A59A);
+    }
+
+    .theme-option-name {
+      flex: 1;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .theme-option-check {
+      color: var(--accent-color);
+      font-weight: 700;
+      opacity: 0;
+    }
+
+    .theme-option.active .theme-option-check {
+      opacity: 1;
+    }
+
+    @media (max-width: 480px) {
+      .theme-selector {
+        top: 10px;
+        right: 10px;
+      }
+
+      .theme-button {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+
+      .theme-menu {
+        min-width: 160px;
+      }
     }
 
     .container {
@@ -88,12 +619,13 @@
     .page-title {
       font-size: 3rem;
       font-weight: 700;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
       -webkit-text-fill-color: transparent;
       margin-bottom: 10px;
+      transition: background 0.5s ease;
     }
 
     .page-subtitle {
@@ -191,6 +723,10 @@
         font-size: 0.95rem;
         margin-bottom: 6px;
       }
+
+      body.theme-kyoto .interaction-title {
+        font-size: 1.15rem;
+      }
       
       .interaction-description {
         font-size: 0.7rem;
@@ -206,6 +742,8 @@
       .toggle-knob {
         width: 20px;
         height: 20px;
+        top: 0.5px;
+        left: 0.5px;
       }
       
       .toggle-switch.active .toggle-knob {
@@ -266,30 +804,33 @@
       position: relative;
       width: 60px;
       height: 30px;
-      background: #ccc;
+      background: #f0f0f0;
+      border: 2px solid #e0e0e0;
       border-radius: 30px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
     }
 
     .toggle-switch.active {
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      border-color: transparent;
     }
 
     .toggle-knob {
       position: absolute;
-      top: 3px;
-      left: 3px;
+      top: 1px;
+      left: 1px;
       width: 24px;
       height: 24px;
-      background: white;
+      background: #999;
       border-radius: 50%;
-      transition: transform 0.3s ease;
+      transition: all 0.3s ease;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     .toggle-switch.active .toggle-knob {
       transform: translateX(30px);
+      background: white;
     }
 
     /* 2. Like Button */
@@ -308,8 +849,8 @@
     }
 
     .like-button.liked {
-      background: linear-gradient(214deg, #ff285c, #b010fb);
-      border-color: #ff285c;
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      border-color: var(--accent-color);
       color: white;
       transform: scale(1.05);
     }
@@ -340,7 +881,7 @@
       user-select: none;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
-      scrollbar-color: #ff285c #f0f0f0;
+      scrollbar-color: var(--accent-color) #f0f0f0;
       width: 100%;
       max-width: 100%;
     }
@@ -359,7 +900,7 @@
     }
 
     .cards-container::-webkit-scrollbar-thumb {
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       border-radius: 10px;
     }
 
@@ -434,22 +975,32 @@
     .tabs-header {
       display: flex;
       border-bottom: 2px solid #e0e0e0;
-      gap: 5px;
+      gap: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .tabs-header::-webkit-scrollbar {
+      display: none;
     }
 
     .tab-button {
-      padding: 12px 24px;
+      padding: 8px 12px;
       background: none;
       border: none;
       cursor: pointer;
       font-weight: 600;
+      font-size: 0.85rem;
       color: #666;
       transition: all 0.3s ease;
       position: relative;
+      white-space: nowrap;
+      flex: 1;
+      text-align: center;
     }
 
     .tab-button.active {
-      color: #ff285c;
+      color: var(--accent-color);
     }
 
     .tab-button.active::after {
@@ -459,20 +1010,26 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
     }
 
     .tabs-content {
-      padding: 20px 0;
+      padding: 12px 0;
     }
 
     .tab-panel {
       display: none;
       animation: fadeIn 0.3s ease;
+      font-size: 0.85rem;
+      line-height: 1.5;
     }
 
     .tab-panel.active {
       display: block;
+    }
+
+    .tab-panel p {
+      margin: 0;
     }
 
     @keyframes fadeIn {
@@ -489,7 +1046,7 @@
       text-align: center;
       font-size: 1.5rem;
       font-weight: 700;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
@@ -513,7 +1070,7 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(255, 40, 92, 0.4);
     }
@@ -522,7 +1079,7 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       cursor: pointer;
       border: none;
       box-shadow: 0 2px 8px rgba(255, 40, 92, 0.4);
@@ -549,7 +1106,7 @@
     }
 
     .dropdown-button:hover {
-      border-color: #ff285c;
+      border-color: var(--accent-color);
     }
 
     .dropdown-menu {
@@ -592,7 +1149,7 @@
 
     .tooltip-trigger {
       padding: 12px 24px;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       color: white;
       border: none;
       border-radius: 8px;
@@ -707,7 +1264,7 @@
     }
 
     .modal-close:hover {
-      background: #ff285c;
+      background: var(--accent-color);
       color: white;
       transform: rotate(90deg);
     }
@@ -716,7 +1273,7 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 15px;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
@@ -767,7 +1324,7 @@
       width: 100%;
       height: 100px;
       border-radius: 12px;
-      background: #ff285c;
+      background: var(--accent-color);
       transition: background 0.3s ease;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
@@ -843,7 +1400,7 @@
     .progress-button {
       width: 100%;
       padding: 12px;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       color: white;
       border: none;
       border-radius: 8px;
@@ -1001,7 +1558,7 @@
       font-size: 2.5rem;
       font-weight: 700;
       text-align: center;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
@@ -1050,7 +1607,7 @@
 
     .sortable-item:hover {
       background: #f0f0f0;
-      border-color: #ff285c;
+      border-color: var(--accent-color);
     }
 
     .sortable-item.dragging {
@@ -1079,7 +1636,7 @@
 
     .password-input:focus {
       outline: none;
-      border-color: #ff285c;
+      border-color: var(--accent-color);
     }
 
     .strength-meter {
@@ -1204,7 +1761,7 @@
 
     .tag {
       padding: 8px 12px;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       color: white;
       border-radius: 20px;
       display: flex;
@@ -1253,7 +1810,7 @@
 
     .tag-input:focus {
       outline: none;
-      border-color: #ff285c;
+      border-color: var(--accent-color);
     }
 
     /* 20. Skeleton Loader */
@@ -1353,7 +1910,7 @@
       transform: translate(-50%, -50%);
       font-size: 1.5rem;
       font-weight: 700;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
@@ -1363,7 +1920,7 @@
     .circular-button {
       width: 100%;
       padding: 12px;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       color: white;
       border: none;
       border-radius: 8px;
@@ -1457,7 +2014,7 @@
     }
 
     .indicator.active {
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       width: 30px;
       border-radius: 6px;
     }
@@ -1482,7 +2039,7 @@
 
     .search-input:focus {
       outline: none;
-      border-color: #ff285c;
+      border-color: var(--accent-color);
     }
 
     .search-results {
@@ -1521,7 +2078,11 @@
     }
 
     .search-result-item strong {
-      color: #ff285c;
+      color: var(--accent-color);
+    }
+
+    .search-result-item:hover strong {
+      color: var(--accent-color);
     }
 
     /* 24. Context Menu */
@@ -1647,7 +2208,7 @@
     .drawer-header h3 {
       margin: 0;
       font-size: 1.3rem;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
@@ -1669,7 +2230,7 @@
     }
 
     .drawer-close:hover {
-      background: #ff285c;
+      background: var(--accent-color);
       color: white;
       transform: rotate(90deg);
     }
@@ -1723,7 +2284,7 @@
     }
 
     .stepper-step.active .stepper-circle {
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       color: white;
       transform: scale(1.1);
     }
@@ -1744,7 +2305,7 @@
     }
 
     .stepper-step.active .stepper-label {
-      color: #ff285c;
+      color: var(--accent-color);
     }
 
     .stepper-line {
@@ -1771,12 +2332,12 @@
     }
 
     .stepper-btn:hover {
-      border-color: #ff285c;
-      color: #ff285c;
+      border-color: var(--accent-color);
+      color: var(--accent-color);
     }
 
     .stepper-btn.primary {
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       color: white;
       border: none;
     }
@@ -1812,7 +2373,7 @@
 
     .clipboard-button {
       width: 50px;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -1875,8 +2436,8 @@
     }
 
     .checkbox-input:checked + .checkbox-box {
-      background: linear-gradient(214deg, #ff285c, #b010fb);
-      border-color: #ff285c;
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      border-color: var(--accent-color);
     }
 
     .checkbox-input:checked + .checkbox-box::after {
@@ -1909,7 +2470,7 @@
     }
 
     .custom-checkbox:hover .checkbox-box {
-      border-color: #ff285c;
+      border-color: var(--accent-color);
     }
 
     /* 29. Pagination */
@@ -1936,8 +2497,8 @@
     }
 
     .pagination-btn:hover {
-      border-color: #ff285c;
-      color: #ff285c;
+      border-color: var(--accent-color);
+      color: var(--accent-color);
     }
 
     .pagination-btn:disabled {
@@ -1965,13 +2526,13 @@
     }
 
     .pagination-number:hover {
-      border-color: #ff285c;
-      color: #ff285c;
+      border-color: var(--accent-color);
+      color: var(--accent-color);
     }
 
     .pagination-number.active {
-      background: linear-gradient(214deg, #ff285c, #b010fb);
-      border-color: #ff285c;
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
+      border-color: var(--accent-color);
       color: white;
     }
 
@@ -2013,7 +2574,7 @@
 
     .expandable-search.expanded .expandable-input {
       opacity: 1;
-      border-color: #ff285c;
+      border-color: var(--accent-color);
     }
 
     .expandable-input:focus {
@@ -2027,7 +2588,7 @@
       width: 50px;
       height: 50px;
       border: none;
-      background: linear-gradient(214deg, #ff285c, #b010fb);
+      background: linear-gradient(214deg, var(--primary-start), var(--primary-end));
       border-radius: 50%;
       cursor: pointer;
       font-size: 1.3rem;
@@ -2059,8 +2620,8 @@
     }
 
     .back-button:hover {
-      border-color: #ff285c;
-      color: #ff285c;
+      border-color: var(--accent-color);
+      color: var(--accent-color);
       transform: translateX(-5px);
     }
 
@@ -2081,6 +2642,39 @@
 </head>
 
 <body>
+  <!-- Theme Selector -->
+  <div class="theme-selector">
+    <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-button" id="themeButton">
+        <div class="theme-icon"></div>
+        <span>Theme</span>
+        <span>▼</span>
+      </button>
+      <div class="theme-menu" id="themeMenu">
+        <div class="theme-option active" data-theme="default">
+          <div class="theme-option-color default"></div>
+          <span class="theme-option-name">Default</span>
+          <span class="theme-option-check">✓</span>
+        </div>
+        <div class="theme-option" data-theme="blue">
+          <div class="theme-option-color blue"></div>
+          <span class="theme-option-name">Ocean Blue</span>
+          <span class="theme-option-check">✓</span>
+        </div>
+        <div class="theme-option" data-theme="green">
+          <div class="theme-option-color green"></div>
+          <span class="theme-option-name">Fresh Green</span>
+          <span class="theme-option-check">✓</span>
+        </div>
+        <div class="theme-option" data-theme="kyoto">
+          <div class="theme-option-color kyoto"></div>
+          <span class="theme-option-name">Kyoto Twilight</span>
+          <span class="theme-option-check">✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <a href="../index.html" class="back-button">
       <span>←</span> Back to Home
@@ -2109,6 +2703,12 @@
         <p class="interaction-description">Animated button with heart icon feedback</p>
         <button class="like-button" id="likeButton">
           <svg class="like-icon" viewBox="0 0 24 24">
+            <defs>
+              <linearGradient id="kyotoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#E8DAB2;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#D4A59A;stop-opacity:1" />
+              </linearGradient>
+            </defs>
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
           <span id="likeCount">0</span> Likes
@@ -3396,6 +3996,73 @@
         expandableSearch.classList.remove('expanded');
       }
     });
+
+    // Theme Selector
+    const themeDropdown = document.getElementById('themeDropdown');
+    const themeButton = document.getElementById('themeButton');
+    const themeMenu = document.getElementById('themeMenu');
+    const themeOptions = document.querySelectorAll('.theme-option');
+
+    // Load saved theme from localStorage
+    const savedTheme = localStorage.getItem('uiInteractionsTheme') || 'default';
+    applyTheme(savedTheme);
+
+    // Toggle theme dropdown
+    themeButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      themeDropdown.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!themeDropdown.contains(e.target)) {
+        themeDropdown.classList.remove('active');
+      }
+    });
+
+    // Theme selection
+    themeOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const theme = option.getAttribute('data-theme');
+        applyTheme(theme);
+        localStorage.setItem('uiInteractionsTheme', theme);
+        themeDropdown.classList.remove('active');
+      });
+    });
+
+    function applyTheme(theme) {
+      // Remove all theme classes
+      document.body.classList.remove('theme-blue', 'theme-green', 'theme-kyoto');
+      
+      // Apply new theme
+      if (theme !== 'default') {
+        document.body.classList.add(`theme-${theme}`);
+      }
+      
+      // Update color picker for Kyoto theme
+      const colorInput = document.getElementById('colorInput');
+      const colorDisplay = document.getElementById('colorDisplay');
+      const colorValue = document.getElementById('colorValue');
+      
+      if (theme === 'kyoto') {
+        colorInput.value = '#8c2c2c';
+        colorDisplay.style.background = '#8c2c2c';
+        colorValue.textContent = '#8c2c2c';
+      } else {
+        colorInput.value = '#ff285c';
+        colorDisplay.style.background = '#ff285c';
+        colorValue.textContent = '#ff285c';
+      }
+      
+      // Update active state in menu
+      themeOptions.forEach(option => {
+        if (option.getAttribute('data-theme') === theme) {
+          option.classList.add('active');
+        } else {
+          option.classList.remove('active');
+        }
+      });
+    }
   </script>
 </body>
 </html>
