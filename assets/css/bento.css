@@ -35,6 +35,11 @@
 }
 
 /* Wide 16:9 variant */
+
+/* Tall 9:16 variant */
+.bento-card.tall {
+    aspect-ratio: 9 / 16;
+}
 .bento-card.wide {
     aspect-ratio: 16 / 9;
 }
