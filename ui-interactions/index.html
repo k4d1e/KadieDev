@@ -5194,7 +5194,27 @@
     // Reset all customizations
     resetButton.addEventListener('click', () => {
       if (confirm('Are you sure you want to reset all customizations? This cannot be undone.')) {
+        // Clear state
         customizerState.customizations = {};
+        
+        // Clear localStorage
+        localStorage.removeItem('currentCustomizations');
+        
+        // Remove all inline styles from elements
+        Object.keys(elementDefinitions).forEach(elementKey => {
+          const definition = elementDefinitions[elementKey];
+          if (definition && definition.selectors) {
+            definition.selectors.forEach(selector => {
+              const elements = document.querySelectorAll(selector);
+              elements.forEach(element => {
+                // Remove inline styles
+                element.removeAttribute('style');
+              });
+            });
+          }
+        });
+        
+        // Reload page to restore defaults
         location.reload();
       }
     });
