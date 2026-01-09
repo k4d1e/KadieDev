@@ -28,7 +28,17 @@
           "Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic",
           "Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic",
           "Playfair Display:300,400,500,600,700",
-          "Cormorant Garamond:300,300italic,400,400italic,500,500italic,600,600italic,700,700italic"
+          "Cormorant Garamond:300,300italic,400,400italic,500,500italic,600,600italic,700,700italic",
+          "Roboto:100,300,400,500,700,900",
+          "Lato:100,300,400,700,900",
+          "Poppins:100,200,300,400,500,600,700,800,900",
+          "Raleway:100,200,300,400,500,600,700,800,900",
+          "Merriweather:300,400,700,900",
+          "Source Sans Pro:200,300,400,600,700,900",
+          "Inter:100,200,300,400,500,600,700,800,900",
+          "Josefin Sans:100,200,300,400,500,600,700",
+          "Crimson Text:400,600,700",
+          "Libre Baskerville:400,700"
         ]
       }
     });
@@ -47,6 +57,12 @@
       --accent-color: #ff285c;
       --font-heading: 'Montserrat', sans-serif;
       --font-body: 'Montserrat', sans-serif;
+      --font-action: 'Montserrat', sans-serif;
+      --font-display: 'Montserrat', sans-serif;
+      --font-menu: 'Montserrat', sans-serif;
+      --font-input: 'Montserrat', sans-serif;
+      --font-status: 'Montserrat', sans-serif;
+      --font-supporting: 'Montserrat', sans-serif;
     }
 
     body.theme-blue {
@@ -73,6 +89,12 @@
       --accent-color: #F0E6D2;
       --font-heading: 'Playfair Display', serif;
       --font-body: 'Cormorant Garamond', serif;
+      --font-action: 'Montserrat', sans-serif;
+      --font-display: 'Playfair Display', serif;
+      --font-menu: 'Cormorant Garamond', serif;
+      --font-input: 'Montserrat', sans-serif;
+      --font-status: 'Cormorant Garamond', serif;
+      --font-supporting: 'Cormorant Garamond', serif;
     }
 
     /* Kyoto Theme Dark Mode Adjustments */
@@ -426,9 +448,127 @@
 
     h1, h2, h3, h4, h5, h6,
     .page-title,
-    .page-subtitle,
     .interaction-title {
       font-family: var(--font-heading);
+      transition: font-family 0.3s ease;
+    }
+
+    /* 8-Category Font System */
+    
+    /* 1. Card Titles - Already covered by .interaction-title above */
+    
+    /* 2. Card Descriptions & Body Text */
+    .page-subtitle,
+    .interaction-description,
+    body {
+      font-family: var(--font-body);
+      transition: font-family 0.3s ease;
+    }
+
+    /* 3. Primary Action Text (Buttons) */
+    button,
+    .like-button,
+    .modal-trigger,
+    .toast-button,
+    .counter-button,
+    .progress-button,
+    .circular-button,
+    .stepper-btn,
+    .drawer-button,
+    .clipboard-button,
+    .skeleton-button,
+    .pagination-btn,
+    .carousel-arrow,
+    .theme-button,
+    .customizer-button {
+      font-family: var(--font-action);
+      transition: font-family 0.3s ease;
+    }
+
+    /* 4. Display Values (Large numbers/values) */
+    .counter-display,
+    .progress-text,
+    .range-value,
+    .rating-value,
+    .circular-text,
+    .color-value,
+    #toggleStatus,
+    #likeCount,
+    #rangeValue,
+    #ratingValue,
+    #progressText,
+    #counterDisplay,
+    #circularText,
+    #colorValue {
+      font-family: var(--font-display);
+      transition: font-family 0.3s ease;
+    }
+
+    /* 5. Menu & Navigation Text */
+    .tab-button,
+    .dropdown-item,
+    .dropdown-button,
+    .accordion-header,
+    .drawer-item,
+    .context-menu-item,
+    .stepper-label,
+    .stepper-circle,
+    .pagination-number,
+    .theme-option-name,
+    .nav-button {
+      font-family: var(--font-menu);
+      transition: font-family 0.3s ease;
+    }
+
+    /* 6. Form & Input Text */
+    input,
+    textarea,
+    select,
+    .tag-input,
+    .password-input,
+    .search-input,
+    .clipboard-input,
+    .expandable-input,
+    .checkbox-label,
+    .tag,
+    .customizer-input,
+    .element-selector {
+      font-family: var(--font-input);
+      transition: font-family 0.3s ease;
+    }
+
+    /* 7. Status & Info Text */
+    .strength-text,
+    .pagination-info,
+    .toast-message,
+    .clipboard-message,
+    .notification-message,
+    #strengthText,
+    #paginationInfo,
+    #clipboardMessage,
+    #dropdownSelected {
+      font-family: var(--font-status);
+      transition: font-family 0.3s ease;
+    }
+
+    /* 8. Supporting Text (Content, labels, etc.) */
+    .tooltip-text,
+    .modal-content p,
+    .modal-title,
+    .tab-panel,
+    .accordion-content-inner,
+    .draggable-card,
+    .carousel-slide,
+    .gallery-item,
+    .sortable-item,
+    .search-result-item,
+    .context-area,
+    .drawer-header h3,
+    .flip-card-front,
+    .flip-card-back,
+    .customizer-label,
+    .preview-placeholder {
+      font-family: var(--font-supporting);
       transition: font-family 0.3s ease;
     }
 
@@ -4643,8 +4783,14 @@
             { name: 'Accent Color', property: '--accent-color', type: 'color' }
           ],
           typography: [
-            { name: 'Heading Font', property: '--font-heading', type: 'font' },
-            { name: 'Body Font', property: '--font-body', type: 'font' }
+            { name: '1. Heading Font (Card Titles)', property: '--font-heading', type: 'font' },
+            { name: '2. Body Font (Descriptions)', property: '--font-body', type: 'font' },
+            { name: '3. Action Font (Buttons)', property: '--font-action', type: 'font' },
+            { name: '4. Display Font (Values/Numbers)', property: '--font-display', type: 'font' },
+            { name: '5. Menu Font (Navigation)', property: '--font-menu', type: 'font' },
+            { name: '6. Input Font (Form Fields)', property: '--font-input', type: 'font' },
+            { name: '7. Status Font (Info Text)', property: '--font-status', type: 'font' },
+            { name: '8. Supporting Font (Content)', property: '--font-supporting', type: 'font' }
           ]
         }
       },
@@ -4947,12 +5093,24 @@
         
         case 'css-variables':
           previewHTML = `
-            <div class="preview-element" id="previewElement" style="text-align: center; padding: 20px;">
-              <h3 style="background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); background-clip: text; -webkit-background-clip: text; color: transparent; -webkit-text-fill-color: transparent; margin-bottom: 15px;">Global Variables</h3>
-              <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-                <div style="width: 40px; height: 40px; border-radius: 8px; background: var(--primary-start);"></div>
-                <div style="width: 40px; height: 40px; border-radius: 8px; background: var(--primary-end);"></div>
-                <div style="width: 40px; height: 40px; border-radius: 8px; background: var(--accent-color);"></div>
+            <div class="preview-element" id="previewElement" style="padding: 15px; max-width: 100%;">
+              <div style="text-align: center; margin-bottom: 15px;">
+                <h3 style="background: linear-gradient(214deg, var(--primary-start), var(--primary-end)); background-clip: text; -webkit-background-clip: text; color: transparent; -webkit-text-fill-color: transparent; font-size: 1.3rem; margin: 0 0 10px 0;">8-Category Font System</h3>
+                <div style="display: flex; gap: 8px; justify-content: center;">
+                  <div style="width: 30px; height: 30px; border-radius: 6px; background: var(--primary-start);"></div>
+                  <div style="width: 30px; height: 30px; border-radius: 6px; background: var(--primary-end);"></div>
+                  <div style="width: 30px; height: 30px; border-radius: 6px; background: var(--accent-color);"></div>
+                </div>
+              </div>
+              <div style="display: grid; gap: 8px; font-size: 0.75rem; text-align: left;">
+                <div style="font-family: var(--font-heading); font-weight: 600;">1. Heading</div>
+                <div style="font-family: var(--font-body);">2. Body</div>
+                <div style="font-family: var(--font-action); font-weight: 600;">3. Action</div>
+                <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem;">4. Display</div>
+                <div style="font-family: var(--font-menu);">5. Menu</div>
+                <div style="font-family: var(--font-input);">6. Input</div>
+                <div style="font-family: var(--font-status); font-size: 0.7rem;">7. Status</div>
+                <div style="font-family: var(--font-supporting); font-size: 0.7rem;">8. Support</div>
               </div>
             </div>
           `;
