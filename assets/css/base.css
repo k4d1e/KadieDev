@@ -29,7 +29,7 @@ body {
 /* ===== TYPOGRAPHY ===== */
 
 .hero-heading {
-    color: #000;
+    color: rgba(19, 23, 46, 1.0);
     font-size: 18px;
 }
 
@@ -67,7 +67,7 @@ body {
 .gradient-link.secondary {
     background-image: none;
     opacity: 0.69;
-    color: rgba(0, 18, 121, 0.7);
+    color: rgba(0, 77, 121, 0.7);
     background-clip: border-box;
     -webkit-text-fill-color: inherit;
 }
@@ -81,11 +81,11 @@ body {
 }
 
 .gradient-link:visited {
-    color: rgba(0, 0, 0, 0.74);
+    color: rgba(0, 77, 121, 0.7);
 }
 
 .gradient-link.secondary:visited {
-    color: rgba(0, 18, 121, 0.7);
+    color: rgba(0, 77, 121, 0.7);
 }
 
 /* Remove underline from anchor tags containing gradient-link spans */
@@ -97,7 +97,7 @@ a .gradient-link,
 /* Text colors */
 .nav-button-year {
     opacity: 0.69;
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(0, 77, 121, 0.7);
 }
 
 .last-updated {
