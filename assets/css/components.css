@@ -508,7 +508,6 @@
     pointer-events: auto;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .spline-viewer-container spline-viewer {
@@ -520,7 +519,7 @@
 /* Medium breakpoint - smaller size on tablets */
 @media screen and (max-width: 989px) {
     .spline-viewer-container {
-        width: 300px;
+        width: 200px;
         height: 300px;
         bottom: 20px;
         right: 20px;

@@ -1,11 +1,15 @@
-import { Application } from '@splinetool/runtime';
+// Spline Scene Controller
+// Handles bone animation using the Spline Runtime API
 
-// Initialize the Spline application
-const canvas = document.querySelector('.spline-viewer-container');
+import { Application } from 'https://unpkg.com/@splinetool/runtime@latest/build/runtime.js';
+
+// Initialize when DOM is ready
+const canvas = document.getElementById('spline-canvas');
 const spline = new Application(canvas);
 
 // Load the Spline scene
-spline.load('https://prod.spline.design/FaL6Mf-9kilRQg91/scene.splinecode')
+spline
+  .load('https://prod.spline.design/FaL6Mf-9kilRQg91/scene.splinecode')
   .then(() => {
     console.log('Spline scene loaded successfully');
 
@@ -14,6 +18,7 @@ spline.load('https://prod.spline.design/FaL6Mf-9kilRQg91/scene.splinecode')
     
     if (!bone001) {
       console.error('Bone001 not found in the scene');
+      console.log('Available objects:', spline.getAllObjects?.().map(obj => obj.name));
       return;
     }
 
