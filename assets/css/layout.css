@@ -164,7 +164,7 @@
     }
 }
 
-/* Small breakpoint (max-width: 820px) */
+/* Small phone breakpoint (max-width: 820px) */
 @media screen and (max-width: 820px) {
     .home-right-column {
         position: static;
@@ -173,8 +173,8 @@
         padding-top: 5vh;
         padding-right: 24px;
         padding-left: 24px;
-        padding-bottom: 15vh;
-        margin-bottom: 4vh;
+        padding-bottom: 5vh;
+        margin-bottom: 1vh;
     }
     
     .home-left-column {
@@ -204,8 +204,8 @@
     .home-right-column {
         padding-top: 5vh;
         padding-right: 24px;
-        padding-bottom: 15vh;
-        margin-bottom: 4vh;
+        padding-bottom: 5vh;
+        margin-bottom: 1vh;
     }
     
     .home-left-column {
