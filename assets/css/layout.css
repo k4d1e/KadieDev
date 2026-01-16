@@ -142,12 +142,14 @@
     grid-column-gap: 6px;
     grid-row-gap: 6px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    color: rgba(0, 18, 121, 0.7);
 }
 
 .hero-links.secondary {
     margin-top: 12px;
     grid-column-gap: 12px;
     grid-row-gap: 12px;
+    color: rgba(0, 18, 121, 0.7);
 }
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */
